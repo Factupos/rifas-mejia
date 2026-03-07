@@ -1053,12 +1053,320 @@ body.search-has-text #raffles{ display:none !important; }
   .brand-info h1 { font-size: 26px; }
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+
+
+/* =========================================================
+   PANEL DE SUCURSALES / RIFAS
+   ========================================================= */
+body.branch-selector-mode{
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  overflow:hidden;
+}
+body.branch-selector-mode header,
+body.branch-selector-mode #searchResult,
+body.branch-selector-mode #raffles,
+body.branch-selector-mode #message,
+body.branch-selector-mode #loadingMessage,
+body.branch-selector-mode .top-veil{ display:none !important; }
+body.branch-app-mode #backToBranchesBtn{ display:inline-flex; }
+
+.branch-shell{
+  position:fixed;
+  inset:0;
+  z-index:99997;
+  display:none;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) 14px calc(env(safe-area-inset-bottom,0px) + 18px);
+  background:
+    radial-gradient(1000px 700px at 12% 8%, rgba(0,212,106,.22) 0, transparent 58%),
+    radial-gradient(1000px 720px at 88% 16%, rgba(11,92,255,.28) 0, transparent 58%),
+    radial-gradient(900px 680px at 50% 100%, rgba(255,196,0,.20) 0, transparent 60%),
+    linear-gradient(135deg, #061326 0%, #0B2B66 45%, #3A168B 100%);
+}
+.branch-shell.show{ display:block; }
+.branch-shell::before{
+  content:"";
+  position:fixed;
+  inset:-22%;
+  pointer-events:none;
+  background:
+    conic-gradient(from 120deg, rgba(255,255,255,.06), rgba(255,255,255,0) 30%, rgba(255,255,255,.05) 55%, rgba(255,255,255,0) 78%, rgba(255,255,255,.06));
+  animation:branchAuraSpin 16s linear infinite;
+  mix-blend-mode:screen;
+  opacity:.65;
+}
+@keyframes branchAuraSpin{ to{ transform:rotate(1turn); } }
+.branch-stage{
+  position:relative;
+  width:min(100%, 1120px);
+  min-height:100%;
+  margin:0 auto;
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  gap:16px;
+}
+.branch-hero{
+  position:relative;
+  padding:18px 18px 16px;
+  border-radius:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 24px 60px rgba(0,0,0,.32);
+  backdrop-filter:blur(18px) saturate(145%);
+  -webkit-backdrop-filter:blur(18px) saturate(145%);
+  overflow:hidden;
+}
+.branch-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto -8% -50% auto;
+  width:220px;
+  height:220px;
+  border-radius:999px;
+  background:radial-gradient(circle, rgba(255,255,255,.20), transparent 68%);
+  filter:blur(10px);
+  pointer-events:none;
+}
+.branch-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  font-weight:1000;
+}
+.branch-kicker::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:linear-gradient(135deg, #00D46A, #0B5CFF);
+  box-shadow:0 0 12px rgba(0,212,106,.55);
+}
+.branch-title{
+  margin:14px 0 6px;
+  font-size:clamp(28px, 8vw, 52px);
+  line-height:1.02;
+  font-weight:1000;
+  letter-spacing:-.02em;
+  text-shadow:0 8px 24px rgba(0,0,0,.28);
+}
+.branch-subtitle{
+  margin:0;
+  max-width:780px;
+  font-size:clamp(13px, 3.7vw, 17px);
+  line-height:1.45;
+  color:rgba(255,255,255,.84);
+  font-weight:700;
+}
+.branch-grid{
+  display:grid;
+  gap:14px;
+  align-content:start;
+  grid-template-columns:1fr;
+  min-height:0;
+}
+.branch-grid[data-count="1"] .branch-card{ min-height:calc(100dvh - 230px); }
+.branch-grid[data-count="2"]{ grid-template-columns:1fr; }
+.branch-grid[data-count="3"],
+.branch-grid[data-count="4"],
+.branch-grid[data-count="5"],
+.branch-grid[data-count="6"]{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+.branch-grid[data-count="3"] .branch-card:nth-child(3){ grid-column:1 / -1; }
+.branch-card{
+  position:relative;
+  display:grid;
+  grid-template-rows:auto auto 1fr;
+  gap:12px;
+  min-height:210px;
+  padding:16px;
+  border:none;
+  border-radius:28px;
+  color:#fff;
+  text-align:left;
+  cursor:pointer;
+  background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 18px 48px rgba(0,0,0,.28);
+  backdrop-filter:blur(16px) saturate(135%);
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+  overflow:hidden;
+  transform:translateZ(0);
+  transition:transform .24s cubic-bezier(.22,1,.36,1), box-shadow .24s ease, border-color .24s ease, filter .24s ease;
+}
+.branch-card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(135deg, rgba(255,255,255,.32), rgba(255,255,255,.03), rgba(255,255,255,.18));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  opacity:.95;
+}
+.branch-card::after{
+  content:"";
+  position:absolute;
+  inset:auto -10% -28% auto;
+  width:180px;
+  height:180px;
+  border-radius:999px;
+  background:radial-gradient(circle, rgba(255,255,255,.17), transparent 70%);
+  filter:blur(12px);
+  pointer-events:none;
+}
+.branch-card:active{ transform:scale(.97); }
+.branch-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.28);
+  box-shadow:0 24px 60px rgba(0,0,0,.34), 0 0 22px rgba(11,92,255,.16);
+  filter:saturate(1.05);
+}
+.branch-chip{
+  position:relative;
+  z-index:2;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  max-width:100%;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(255,255,255,.16);
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.branch-chip strong{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.branch-copy{
+  position:relative;
+  z-index:2;
+  display:grid;
+  gap:8px;
+}
+.branch-name{
+  margin:0;
+  font-size:clamp(20px, 5vw, 28px);
+  line-height:1.05;
+  font-weight:1000;
+  letter-spacing:-.02em;
+}
+.branch-desc{
+  margin:0;
+  font-size:clamp(13px, 3.6vw, 16px);
+  line-height:1.4;
+  color:rgba(255,255,255,.84);
+  font-weight:750;
+}
+.branch-media{
+  position:relative;
+  z-index:2;
+  min-height:0;
+  display:flex;
+  align-items:stretch;
+}
+.branch-image{
+  width:100%;
+  aspect-ratio:16/10;
+  object-fit:cover;
+  border-radius:22px;
+  background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 14px 30px rgba(0,0,0,.28);
+}
+.branch-enter{
+  position:absolute;
+  right:16px;
+  top:16px;
+  z-index:3;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:11px;
+  font-weight:1000;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  box-shadow:0 8px 18px rgba(0,0,0,.22);
+}
+.branch-empty{
+  padding:22px 18px;
+  border-radius:24px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  text-align:center;
+  font-weight:850;
+  color:rgba(255,255,255,.88);
+}
+#backToBranchesBtn{
+  position:absolute;
+  top:12px;
+  right:16px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-width:42px;
+  height:42px;
+  padding:0 14px;
+  border:none;
+  border-radius:999px;
+  color:#fff;
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  backdrop-filter:blur(12px) saturate(120%);
+  -webkit-backdrop-filter:blur(12px) saturate(120%);
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.9px;
+  cursor:pointer;
+  z-index:120;
+}
+#backToBranchesBtn:active{ transform:scale(.96); }
+@media (max-width: 768px){
+  #backToBranchesBtn span:last-child{ display:none; }
+  .branch-stage{ gap:14px; }
+  .branch-hero{ padding:16px; border-radius:24px; }
+  .branch-grid[data-count="1"] .branch-card{ min-height:calc(100dvh - 210px); }
+  .branch-card{ border-radius:24px; padding:14px; }
+  .branch-image{ border-radius:18px; aspect-ratio: 16/9; }
+}
+
 </style>
 
 </head>
 
 <body>
   <div class="top-veil" aria-hidden="true"></div>
+
+
+
+  <div id="branchShell" class="branch-shell" aria-live="polite">
+    <div class="branch-stage">
+      <section class="branch-hero">
+        <div class="branch-kicker">Panel principal</div>
+        <h2 id="branchTitle" class="branch-title">Elige tu rifa</h2>
+        <p id="branchSubtitle" class="branch-subtitle">Selecciona la sucursal o rifa disponible para ingresar con una experiencia rápida, elegante y optimizada para celular.</p>
+      </section>
+      <section id="branchGrid" class="branch-grid" data-count="0"></section>
+    </div>
+  </div>
 
   <!-- BOOT (pantalla de carga) -->
   <div id="boot" class="boot show" aria-live="polite" aria-busy="true">
@@ -1102,6 +1410,7 @@ body.search-has-text #raffles{ display:none !important; }
   </div>
 
   <header>
+    <button id="backToBranchesBtn" type="button" aria-label="Volver al panel principal"><span>←</span><span>Rifas</span></button>
     <div class="brand-group">
       <div class="logoWrap"><img id="logoImg" src="" alt="Logo" referrerpolicy="no-referrer"></div>
       <div class="brand-info">
@@ -1150,7 +1459,10 @@ body.search-has-text #raffles{ display:none !important; }
 /* =========================================================
    ✅ CONFIG (VISIBLES AL INICIO — como pediste)
    ========================================================= */
-const KEY = '1FMVI9US7MolgCRlKPsKGYF7ducTSTbrIDmP6htgwWG8';
+const BASE_KEY = '1FMVI9US7MolgCRlKPsKGYF7ducTSTbrIDmP6htgwWG8';
+const URL_PARAMS = new URLSearchParams(location.search);
+const KEY = (URL_PARAMS.get('ssid') || '').trim() || BASE_KEY;
+const HAS_BRANCH_SELECTED = !!((URL_PARAMS.get('ssid') || '').trim());
 const GID_RAFFLES = '1661661343';   // A: Número, B: Libre/Asignado
 const GID_CONFIG  = '1977832725';    // Config_Publica
 const GID_NOTIFICATIONS = '662101636'; // Notificaciones (logo)
@@ -1429,6 +1741,202 @@ async function fetchCsvBySheetRange(sheetName, rangeA1, timeoutEach=5500){
     let rej=0, reason=null;
     attempts.forEach(p => p.then(resolve).catch(e=>{reason=e; if(++rej===attempts.length) reject(reason)}));
   });
+}
+
+function csvUrlsByKey(spreadsheetId, gid){
+  const ts = Date.now();
+  return [
+    `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}&_=${ts}`,
+    `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${gid}&_=${ts}`
+  ];
+}
+async function fetchCsvAnyFromKey(spreadsheetId, gid, timeoutEach=6000){
+  const urls = csvUrlsByKey(spreadsheetId, gid);
+  const attempts = urls.map(u => fetchWithTimeout(u, timeoutEach).then(txt=>{
+    if(txt && !txt.trimStart().startsWith('<')) return txt;
+    throw new Error('Respuesta inválida');
+  }));
+  return new Promise((resolve, reject)=>{
+    let rej=0, reason=null;
+    attempts.forEach(p => p.then(resolve).catch(e=>{reason=e; if(++rej===attempts.length) reject(reason)}));
+  });
+}
+function rangeUrlsBySheetFromKey(spreadsheetId, sheetName, rangeA1){
+  const ts = Date.now();
+  const s = encodeURIComponent(sheetName);
+  const r = encodeURIComponent(rangeA1);
+  return [
+    `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${s}&range=${r}&_=${ts}`,
+    `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&sheet=${s}&range=${r}&_=${ts}`
+  ];
+}
+async function fetchCsvBySheetRangeFromKey(spreadsheetId, sheetName, rangeA1, timeoutEach=5500){
+  const urls = rangeUrlsBySheetFromKey(spreadsheetId, sheetName, rangeA1);
+  const attempts = urls.map(u => fetchWithTimeout(u, timeoutEach).then(txt=>{
+    if(txt && !txt.trimStart().startsWith('<')) return txt;
+    throw new Error('Respuesta inválida');
+  }));
+  return new Promise((resolve, reject)=>{
+    let rej=0, reason=null;
+    attempts.forEach(p => p.then(resolve).catch(e=>{reason=e; if(++rej===attempts.length) reject(reason)}));
+  });
+}
+
+const BRANCHES_SHEET_NAME = 'Sucursales';
+const BRANCHES_RANGE = 'A:D';
+const BRANCH_CACHE_KEY = `branches_${BASE_KEY}`;
+function normalizeSheetId(raw){
+  return String(raw||'').trim().replace(/[^a-zA-Z0-9-_]/g,'');
+}
+function getSelectedBranchInfo(){
+  try{
+    const raw = sessionStorage.getItem('selectedBranchInfo');
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(!data || !data.sheetId) return null;
+    return data;
+  }catch(_){ return null; }
+}
+function saveSelectedBranchInfo(info){
+  try{ sessionStorage.setItem('selectedBranchInfo', JSON.stringify(info||null)); }catch(_){ }
+}
+function clearSelectedBranchInfo(){
+  try{ sessionStorage.removeItem('selectedBranchInfo'); }catch(_){ }
+}
+function branchUrl(sheetId){
+  const next = new URL(location.href);
+  next.searchParams.set('ssid', sheetId);
+  return next.toString();
+}
+function homeUrl(){
+  return location.origin + location.pathname;
+}
+function sanitizeBranchList(rows){
+  const out = [];
+  for(let i=0;i<rows.length;i++){
+    const row = rows[i] || [];
+    const name = String(row[0] || '').trim();
+    const detail = String(row[1] || '').trim();
+    const image = String(row[3] || '').trim();
+    const rawSheet = i === 0 ? BASE_KEY : normalizeSheetId(row[2]);
+    const sheetId = rawSheet || (i===0 ? BASE_KEY : '');
+    const hasVisual = !!(name || detail || image || sheetId);
+    if(!hasVisual) continue;
+    if(!sheetId) continue;
+    out.push({
+      idx: out.length,
+      order: i,
+      name: name || `Sucursal ${out.length + 1}`,
+      detail: detail || name || `Acceder a la sucursal ${out.length + 1}`,
+      image,
+      sheetId,
+      isBase: i === 0
+    });
+  }
+  return out;
+}
+async function loadBranchesFast(){
+  try{
+    const cached = JSON.parse(localStorage.getItem(BRANCH_CACHE_KEY) || 'null');
+    if(cached && Array.isArray(cached.items) && cached.items.length && (Date.now() - cached.ts) < 5*60*1000){
+      return cached.items;
+    }
+  }catch(_){ }
+
+  const txt = await fetchCsvBySheetRangeFromKey(BASE_KEY, BRANCHES_SHEET_NAME, BRANCHES_RANGE, 5500);
+  const rows = parseCSV(txt);
+  const normalized = sanitizeBranchList(rows);
+  try{ localStorage.setItem(BRANCH_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: normalized })); }catch(_){ }
+  return normalized;
+}
+function branchPlaceholder(name){
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#0B5CFF"/>
+          <stop offset="50%" stop-color="#00D46A"/>
+          <stop offset="100%" stop-color="#FFC400"/>
+        </linearGradient>
+      </defs>
+      <rect width="800" height="500" rx="44" fill="url(#g)"/>
+      <circle cx="660" cy="120" r="130" fill="rgba(255,255,255,.16)"/>
+      <circle cx="120" cy="430" r="160" fill="rgba(255,255,255,.11)"/>
+      <text x="52" y="210" fill="#fff" font-family="Arial, sans-serif" font-size="42" font-weight="900">${String(name||'Rifa').replace(/[<>&"]/g,'')}</text>
+      <text x="52" y="262" fill="rgba(255,255,255,.9)" font-family="Arial, sans-serif" font-size="22" font-weight="700">Toca para ingresar</text>
+    </svg>
+  `);
+}
+function renderBranchCard(item, total){
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'branch-card';
+  button.dataset.sheetId = item.sheetId;
+  button.innerHTML = `
+    <span class="branch-enter">Entrar ✦</span>
+    <span class="branch-chip"><strong>${item.name}</strong></span>
+    <div class="branch-copy">
+      <h3 class="branch-name">${item.detail}</h3>
+      <p class="branch-desc">${total === 1 ? 'Toca la imagen o el detalle para ingresar a la página.' : 'Selecciona esta opción para abrir la página de boletas de esta sucursal.'}</p>
+    </div>
+    <div class="branch-media">
+      <img class="branch-image" src="${item.image || branchPlaceholder(item.name)}" alt="${item.name}" loading="eager" referrerpolicy="no-referrer">
+    </div>
+  `;
+  button.addEventListener('click', ()=> enterBranch(item), { passive:true });
+  return button;
+}
+function renderBranchSelector(items){
+  document.body.classList.add('branch-selector-mode');
+  document.body.classList.remove('branch-app-mode');
+  const shell = document.getElementById('branchShell');
+  const grid = document.getElementById('branchGrid');
+  const title = document.getElementById('branchTitle');
+  const subtitle = document.getElementById('branchSubtitle');
+  if(!shell || !grid || !title || !subtitle) return;
+  const count = Array.isArray(items) ? items.length : 0;
+  title.textContent = count <= 1 ? 'Toca para ingresar' : 'Elige la rifa de tu interés';
+  subtitle.textContent = count <= 1
+    ? 'Accede directamente a la experiencia completa tocando la imagen o los detalles de la sucursal disponible.'
+    : 'Selecciona la sucursal que prefieras. Cada opción abre su propia página de boletas con el Sheet ID correspondiente.';
+  grid.innerHTML = '';
+  grid.dataset.count = String(Math.max(0, count));
+  if(!count){
+    const empty = document.createElement('div');
+    empty.className = 'branch-empty';
+    empty.textContent = 'No se encontraron sucursales configuradas en la hoja Sucursales.';
+    grid.appendChild(empty);
+  }else{
+    const frag = document.createDocumentFragment();
+    items.forEach(item => frag.appendChild(renderBranchCard(item, count)));
+    grid.appendChild(frag);
+  }
+  shell.classList.add('show');
+  bootHide();
+}
+async function enterBranch(item){
+  if(!item || !item.sheetId) return;
+  saveSelectedBranchInfo(item);
+  bootShow();
+  const title = document.getElementById('bootTitle');
+  const sub = document.getElementById('bootSub');
+  const logo = document.getElementById('bootLogoImg');
+  if(title) title.textContent = item.name || 'Ingresando';
+  if(sub) sub.textContent = item.detail || 'Preparando acceso';
+  if(logo && item.image) logo.src = item.image;
+  bootSet(18, 'Preparando acceso…', 'Cargando la sucursal seleccionada');
+  await new Promise(r => setTimeout(r, 180));
+  bootSet(68, 'Ingresando…', item.detail || item.name || 'Abriendo boletas');
+  await new Promise(r => setTimeout(r, 220));
+  location.href = branchUrl(item.sheetId);
+}
+function setupBackToBranches(){
+  const btn = document.getElementById('backToBranchesBtn');
+  if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    clearSelectedBranchInfo();
+    location.href = homeUrl();
+  }, { passive:true });
 }
 
 /* =========================
@@ -2164,6 +2672,47 @@ function onTileTap(el, num, pt){
 document.addEventListener('DOMContentLoaded', async ()=>{
   bootShow();
   bootSet(10, 'Iniciando…', 'Verificando estado y preparando interfaz');
+  setupBackToBranches();
+
+  let shouldOpenLegacyFlow = !HAS_BRANCH_SELECTED;
+  if(!HAS_BRANCH_SELECTED){
+    const selectedInfo = getSelectedBranchInfo();
+    const title = document.getElementById('bootTitle');
+    const sub = document.getElementById('bootSub');
+    const logo = document.getElementById('bootLogoImg');
+    if(title) title.textContent = 'Rifas disponibles';
+    if(sub) sub.textContent = 'Leyendo la hoja Sucursales';
+    if(logo && selectedInfo?.image) logo.src = selectedInfo.image;
+    try{
+      bootSet(24, 'Leyendo sucursales…', 'Consultando Sucursales A:D');
+      const items = await loadBranchesFast();
+      if(items.length){
+        bootSet(88, items.length <= 1 ? 'Sucursal lista' : 'Rifas listas', items.length <= 1 ? 'Toca la tarjeta para ingresar' : 'Selecciona la opción que prefieras');
+        renderBranchSelector(items);
+        return;
+      }
+      clearSelectedBranchInfo();
+      bootSet(34, 'Sin sucursales configuradas', 'Abriendo la rifa principal');
+    }catch(err){
+      clearSelectedBranchInfo();
+      bootSet(34, 'Acceso directo', 'No se encontró panel de sucursales. Abriendo la rifa principal');
+    }
+  }
+
+  document.body.classList.add('branch-app-mode');
+  const selectedInfo = getSelectedBranchInfo();
+  if(selectedInfo?.image){
+    const bootImg = document.getElementById('bootLogoImg');
+    if(bootImg && !bootImg.src) bootImg.src = selectedInfo.image;
+  }
+  if(selectedInfo?.name){
+    const bt = document.getElementById('bootTitle');
+    if(bt) bt.textContent = selectedInfo.name;
+  }
+  if(selectedInfo?.detail){
+    const bs = document.getElementById('bootSub');
+    if(bs) bs.textContent = selectedInfo.detail;
+  }
 
   function updateHeaderPadding(){ recalcHeaderHeightDynamic(); }
   function applyViewportOffset(){
