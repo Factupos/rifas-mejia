@@ -181,9 +181,12 @@ header {
 
 .logoWrap{
   --logo-r: 28px;
-  --ring-gap: 3px;
-  --ring-thick-1: 2.8px;
-  --ring-thick-2: 4.5px;
+  --ring-core: 3px;
+  --ring-outer: 8px;
+  --wave-cyan: rgba(39,215,255,.95);
+  --wave-green: rgba(0,255,169,.90);
+  --wave-gold: rgba(255,211,77,.82);
+  --wave-pink: rgba(255,61,154,.55);
 
   width:95px;
   height:95px;
@@ -204,20 +207,18 @@ header {
 }
 
 .logoWrap::before{
-  inset:calc(-1 * (var(--ring-gap) + var(--ring-thick-1)));
-  border-radius:calc(var(--logo-r) + var(--ring-gap) + var(--ring-thick-1));
-  padding:var(--ring-thick-1);
+  inset:-4px;
+  border-radius:calc(var(--logo-r) + 4px);
+  padding:var(--ring-core);
   background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.30) 0 8%, transparent 18%),
     conic-gradient(
-      from var(--ring-angle),
+      from 210deg,
       rgba(255,255,255,0) 0deg,
-      rgba(255,255,255,.18) 14deg,
-      rgba(39,215,255,.95) 54deg,
-      rgba(0,255,169,.92) 104deg,
-      rgba(255,211,77,.82) 156deg,
-      rgba(255,255,255,.08) 192deg,
-      rgba(255,61,154,.82) 242deg,
-      rgba(39,215,255,.95) 304deg,
+      var(--wave-cyan) 52deg,
+      var(--wave-green) 118deg,
+      var(--wave-gold) 196deg,
+      var(--wave-pink) 272deg,
       rgba(255,255,255,0) 360deg
     );
   -webkit-mask:
@@ -225,28 +226,29 @@ header {
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
+  opacity:.18;
   filter:
-    drop-shadow(0 0 10px rgba(39,215,255,.28))
-    drop-shadow(0 0 18px rgba(0,255,169,.16));
-  opacity:.98;
-  animation:ringFlow 5.8s linear infinite;
+    blur(.35px)
+    drop-shadow(0 0 6px rgba(39,215,255,.18))
+    drop-shadow(0 0 14px rgba(0,255,169,.12));
+  transform:scale(.985);
+  animation: ringRippleCore 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:1;
 }
 
 .logoWrap::after{
-  inset:calc(-1 * (var(--ring-gap) + var(--ring-thick-2) + 5px));
-  border-radius:calc(var(--logo-r) + var(--ring-gap) + var(--ring-thick-2) + 5px);
-  padding:var(--ring-thick-2);
+  inset:-12px;
+  border-radius:calc(var(--logo-r) + 12px);
+  padding:var(--ring-outer);
   background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0 10%, transparent 22%),
     conic-gradient(
-      from var(--ring-angle-2),
+      from 180deg,
       rgba(255,255,255,0) 0deg,
-      rgba(255,211,77,.10) 30deg,
-      rgba(255,211,77,.78) 92deg,
-      rgba(255,61,154,.58) 155deg,
-      rgba(255,255,255,.05) 208deg,
-      rgba(39,215,255,.52) 258deg,
-      rgba(0,255,169,.46) 320deg,
+      rgba(39,215,255,.18) 44deg,
+      rgba(0,255,169,.28) 120deg,
+      rgba(255,211,77,.18) 200deg,
+      rgba(255,61,154,.14) 282deg,
       rgba(255,255,255,0) 360deg
     );
   -webkit-mask:
@@ -254,13 +256,14 @@ header {
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
-  opacity:.88;
+  opacity:0;
   filter:
-    blur(1.2px)
-    drop-shadow(0 0 12px rgba(255,211,77,.16))
-    drop-shadow(0 0 22px rgba(255,61,154,.14))
-    drop-shadow(0 0 26px rgba(39,215,255,.12));
-  animation:ringFlowReverse 8.4s linear infinite, haloBreath 3.2s ease-in-out infinite;
+    blur(1.4px)
+    drop-shadow(0 0 10px rgba(39,215,255,.14))
+    drop-shadow(0 0 24px rgba(0,255,169,.12))
+    drop-shadow(0 0 30px rgba(255,211,77,.10));
+  transform:scale(.90);
+  animation: ringRippleOuter 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:0;
 }
 
@@ -274,65 +277,111 @@ header {
   border:1px solid rgba(255,255,255,.16);
   box-shadow:
     0 0 0 1px rgba(255,255,255,.10),
-    0 0 0 5px rgba(255,255,255,.035),
-    0 14px 28px rgba(0,0,0,.36),
-    0 0 24px rgba(39,215,255,.10),
-    0 0 18px rgba(0,255,169,.08),
-    inset 0 1px 0 rgba(255,255,255,.20),
-    inset 0 -10px 20px rgba(0,0,0,.14);
-  animation:logoFloatMajestic 3.6s ease-in-out infinite;
-}
-
-.logoWrap{
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08),
-    0 0 0 1px rgba(255,255,255,.05);
+    0 0 0 4px rgba(255,255,255,.035),
+    0 14px 28px rgba(0,0,0,.34),
+    0 0 18px rgba(39,215,255,.08),
+    0 0 12px rgba(0,255,169,.06),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -10px 18px rgba(0,0,0,.12);
+  animation: logoWaterBreath 3.8s ease-in-out infinite;
 }
 
 .logoWrap > img{
   background:
-    radial-gradient(circle at 50% 20%, rgba(255,255,255,.12), transparent 46%);
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.10), transparent 42%);
 }
 
-@keyframes ringFlow{
-  from{ --ring-angle: 0deg; }
-  to{ --ring-angle: 360deg; }
-}
-
-@keyframes ringFlowReverse{
-  from{ --ring-angle-2: 360deg; }
-  to{ --ring-angle-2: 0deg; }
-}
-
-@keyframes haloBreath{
-  0%,100%{
-    opacity:.72;
-    transform:scale(1);
+@keyframes ringRippleCore{
+  0%{
+    opacity:.10;
+    transform:scale(.975);
     filter:
-      blur(1.2px)
-      drop-shadow(0 0 12px rgba(255,211,77,.16))
-      drop-shadow(0 0 22px rgba(255,61,154,.14))
-      drop-shadow(0 0 26px rgba(39,215,255,.12));
+      blur(.25px)
+      drop-shadow(0 0 4px rgba(39,215,255,.10))
+      drop-shadow(0 0 8px rgba(0,255,169,.08));
   }
-  50%{
+  16%{
     opacity:.96;
-    transform:scale(1.018);
+    transform:scale(1.015);
     filter:
-      blur(1.4px)
-      drop-shadow(0 0 16px rgba(255,211,77,.20))
-      drop-shadow(0 0 26px rgba(255,61,154,.18))
-      drop-shadow(0 0 32px rgba(39,215,255,.16));
+      blur(.35px)
+      drop-shadow(0 0 10px rgba(39,215,255,.28))
+      drop-shadow(0 0 18px rgba(0,255,169,.18))
+      drop-shadow(0 0 22px rgba(255,211,77,.12));
+  }
+  34%{
+    opacity:.42;
+    transform:scale(1.05);
+  }
+  52%{
+    opacity:.12;
+    transform:scale(1.085);
+  }
+  68%{
+    opacity:.08;
+    transform:scale(.99);
+  }
+  84%{
+    opacity:.72;
+    transform:scale(1.01);
+    filter:
+      blur(.3px)
+      drop-shadow(0 0 8px rgba(39,215,255,.20))
+      drop-shadow(0 0 15px rgba(0,255,169,.14));
+  }
+  100%{
+    opacity:.10;
+    transform:scale(.975);
+    filter:
+      blur(.25px)
+      drop-shadow(0 0 4px rgba(39,215,255,.10))
+      drop-shadow(0 0 8px rgba(0,255,169,.08));
   }
 }
 
-@keyframes logoFloatMajestic{
+@keyframes ringRippleOuter{
+  0%{
+    opacity:0;
+    transform:scale(.88);
+  }
+  12%{
+    opacity:.08;
+    transform:scale(.94);
+  }
+  24%{
+    opacity:.78;
+    transform:scale(1.03);
+  }
+  40%{
+    opacity:.30;
+    transform:scale(1.12);
+  }
+  56%{
+    opacity:0;
+    transform:scale(1.22);
+  }
+  100%{
+    opacity:0;
+    transform:scale(1.22);
+  }
+}
+
+@keyframes logoWaterBreath{
   0%,100%{
     transform:translateY(0) scale(1);
-    filter:brightness(1) saturate(1.03);
+    filter:brightness(1) saturate(1.02);
+  }
+  25%{
+    transform:translateY(-1px) scale(1.012);
+    filter:brightness(1.04) saturate(1.08);
   }
   50%{
-    transform:translateY(-1px) scale(1.022);
-    filter:brightness(1.05) saturate(1.12);
+    transform:translateY(0) scale(1.006);
+    filter:brightness(1.02) saturate(1.04);
+  }
+  75%{
+    transform:translateY(-.5px) scale(1.01);
+    filter:brightness(1.03) saturate(1.06);
   }
 }
 
@@ -970,9 +1019,8 @@ body.search-has-text #raffles{ display:none !important; }
 
   .logoWrap{
     --logo-r: 22px;
-    --ring-gap: 2.5px;
-    --ring-thick-1: 2.4px;
-    --ring-thick-2: 3.8px;
+    --ring-core: 2.5px;
+    --ring-outer: 6px;
     width:75px;
     height:75px;
     border-radius:22px;
@@ -982,11 +1030,21 @@ body.search-has-text #raffles{ display:none !important; }
     border-radius:22px;
     box-shadow:
       0 0 0 1px rgba(255,255,255,.10),
-      0 0 0 4px rgba(255,255,255,.03),
-      0 10px 22px rgba(0,0,0,.34),
-      0 0 18px rgba(39,215,255,.10),
+      0 0 0 3px rgba(255,255,255,.03),
+      0 10px 22px rgba(0,0,0,.32),
+      0 0 14px rgba(39,215,255,.08),
       inset 0 1px 0 rgba(255,255,255,.16),
-      inset 0 -8px 16px rgba(0,0,0,.12);
+      inset 0 -8px 14px rgba(0,0,0,.10);
+  }
+
+  .logoWrap::before{
+    inset:-3px;
+    border-radius:25px;
+  }
+
+  .logoWrap::after{
+    inset:-9px;
+    border-radius:31px;
   }
 
   .brand-info h1 { font-size: 26px; }
