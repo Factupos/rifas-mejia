@@ -181,8 +181,8 @@ header {
 
 .logoWrap{
   --logo-r: 28px;
-  --ring-core: 3px;
-  --ring-outer: 8px;
+  --ring-core: 4px;
+  --ring-outer: 11px;
   --wave-cyan: rgba(39,215,255,.95);
   --wave-green: rgba(0,255,169,.90);
   --wave-gold: rgba(255,211,77,.82);
@@ -226,12 +226,13 @@ header {
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
-  opacity:.18;
-  filter:
-    blur(.35px)
-    drop-shadow(0 0 6px rgba(39,215,255,.18))
-    drop-shadow(0 0 14px rgba(0,255,169,.12));
-  transform:scale(.985);
+  opacity:.30;
+filter:
+  blur(.45px)
+  drop-shadow(0 0 10px rgba(39,215,255,.28))
+  drop-shadow(0 0 20px rgba(0,255,169,.18))
+  drop-shadow(0 0 26px rgba(255,211,77,.10));
+transform:scale(.99);
   animation: ringRippleCore 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:1;
 }
@@ -257,12 +258,13 @@ header {
   -webkit-mask-composite:xor;
   mask-composite:exclude;
   opacity:0;
-  filter:
-    blur(1.4px)
-    drop-shadow(0 0 10px rgba(39,215,255,.14))
-    drop-shadow(0 0 24px rgba(0,255,169,.12))
-    drop-shadow(0 0 30px rgba(255,211,77,.10));
-  transform:scale(.90);
+filter:
+  blur(1.8px)
+  drop-shadow(0 0 14px rgba(39,215,255,.18))
+  drop-shadow(0 0 30px rgba(0,255,169,.16))
+  drop-shadow(0 0 38px rgba(255,211,77,.14))
+  drop-shadow(0 0 20px rgba(255,61,154,.10));
+transform:scale(.92);
   animation: ringRippleOuter 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:0;
 }
@@ -293,49 +295,49 @@ header {
 
 @keyframes ringRippleCore{
   0%{
-    opacity:.10;
-    transform:scale(.975);
+    opacity:.16;
+    transform:scale(.982);
     filter:
-      blur(.25px)
-      drop-shadow(0 0 4px rgba(39,215,255,.10))
-      drop-shadow(0 0 8px rgba(0,255,169,.08));
+      blur(.30px)
+      drop-shadow(0 0 5px rgba(39,215,255,.12))
+      drop-shadow(0 0 10px rgba(0,255,169,.10));
   }
-  16%{
-    opacity:.96;
-    transform:scale(1.015);
+  14%{
+    opacity:1;
+    transform:scale(1.02);
     filter:
-      blur(.35px)
-      drop-shadow(0 0 10px rgba(39,215,255,.28))
-      drop-shadow(0 0 18px rgba(0,255,169,.18))
-      drop-shadow(0 0 22px rgba(255,211,77,.12));
+      blur(.45px)
+      drop-shadow(0 0 14px rgba(39,215,255,.34))
+      drop-shadow(0 0 24px rgba(0,255,169,.22))
+      drop-shadow(0 0 28px rgba(255,211,77,.14));
   }
-  34%{
-    opacity:.42;
-    transform:scale(1.05);
+  30%{
+    opacity:.62;
+    transform:scale(1.065);
   }
-  52%{
+  48%{
+    opacity:.22;
+    transform:scale(1.10);
+  }
+  64%{
     opacity:.12;
-    transform:scale(1.085);
+    transform:scale(1.00);
   }
-  68%{
-    opacity:.08;
-    transform:scale(.99);
-  }
-  84%{
-    opacity:.72;
-    transform:scale(1.01);
+  82%{
+    opacity:.82;
+    transform:scale(1.018);
     filter:
-      blur(.3px)
-      drop-shadow(0 0 8px rgba(39,215,255,.20))
-      drop-shadow(0 0 15px rgba(0,255,169,.14));
+      blur(.38px)
+      drop-shadow(0 0 10px rgba(39,215,255,.24))
+      drop-shadow(0 0 18px rgba(0,255,169,.16));
   }
   100%{
-    opacity:.10;
-    transform:scale(.975);
+    opacity:.16;
+    transform:scale(.982);
     filter:
-      blur(.25px)
-      drop-shadow(0 0 4px rgba(39,215,255,.10))
-      drop-shadow(0 0 8px rgba(0,255,169,.08));
+      blur(.30px)
+      drop-shadow(0 0 5px rgba(39,215,255,.12))
+      drop-shadow(0 0 10px rgba(0,255,169,.10));
   }
 }
 
