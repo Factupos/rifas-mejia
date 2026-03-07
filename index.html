@@ -88,31 +88,52 @@ body::after{
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%} html{overflow-anchor:none}
-body{
-  margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  color:var(--ink); background:transparent;
-  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-  line-height:1.2;
-  padding-top:0; /* Eliminamos el cálculo dinámico */
-  padding-bottom: 40px; /* Margen seguro al final */
-  overscroll-behavior-y:contain; touch-action:manipulation;
+body {
+  margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink); background: transparent;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  line-height: 1.2;
+  
+  /* Se adapta dinámicamente al tamaño del header (con o sin carrito) */
+  padding-top: calc(var(--header-h, 90px) + 20px) !important; 
+  padding-bottom: 40px;
+  
+  /* Animación suave cuando el carrito empuja el contenido */
+  transition: padding-top 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  
+  overscroll-behavior-y: contain; touch-action: manipulation;
 }
-.top-veil{
-  position:fixed; left:0; right:0; top:0; z-index:25; pointer-events:none;
+.top-veil {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 25; pointer-events: none;
   height: 200px;
-  background:linear-gradient(180deg, rgba(7,21,42,.95) 0%, rgba(7,21,42,.55) 45%, rgba(7,21,42,0) 100%);
+  background: linear-gradient(180deg, rgba(7,21,42,.95) 0%, rgba(7,21,42,0) 100%);
+  transform: none !important; /* Evita que el fondo oscuro se mueva con el scroll */
 }
-header{
-  position:sticky; /* Cambio clave: fluye y empuja el contenido */
-  top:0 !important; /* Siempre anclado arriba */
-  left:0; right:0; z-index:100; /* Z-index alto para sobreponer todo */
-  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  align-content:flex-start; /* Evita que el logo salte o se corte en móviles */
-  padding:12px 14px; min-height:90px;
-  background:linear-gradient(180deg, rgba(7,21,42,0.95), rgba(7,21,42,0.85));
+
+.message {
+  padding: 14px 16px; background: rgba(255,255,255,.12); color: #fff; 
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 14px; width: min(92vw,420px); text-align: center;
+  font-size: clamp(16px,4.8vw,22px); font-weight: 900; display: none !important;
+  
+  position: fixed; 
+  /* Se ubica siempre un poco debajo del header */
+  top: calc(var(--header-h, 90px) + 15px) !important; 
+  left: 50%; transform: translateX(-50%);
+  z-index: 110; box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 12px 14px; min-height: 90px;
+  background: linear-gradient(180deg, rgba(7,21,42,0.98), rgba(7,21,42,0.85));
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow:0 12px 32px rgba(0,0,0,.5);
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); /* Efecto cristal premium */
+  box-shadow: 0 12px 32px rgba(0,0,0,.5);
+  /* Eliminamos transform y variables que lo hacían saltar */
 }
 .brand{display:flex;align-items:center;gap:12px}
 .logoWrap{
@@ -233,12 +254,13 @@ header{
 }
 
 /* Result: cuando hay seleccionado/aleatorio, solo se muestra el elegido */
-.search-result{
-  position:relative; /* Se alinea naturalmente bajo el header */
-  margin: 20px auto 30px; /* Separación automática */
-  z-index:55;
-  display:none; width:min(92vw,720px);
-  pointer-events:auto; flex-wrap:wrap; justify-content:center; gap:12px;
+.search-result {
+  position: relative !important;
+  top: 0 !important; /* Limpiamos cualquier top anterior */
+  margin: 0 auto 20px; 
+  z-index: 55;
+  display: none; width: min(92vw,720px);
+  pointer-events: auto; flex-wrap: wrap; justify-content: center; gap: 12px;
 }
 body.search-has-text #raffles{ display:none !important; } /* << solo mostrar seleccionado */
 #raffles{
