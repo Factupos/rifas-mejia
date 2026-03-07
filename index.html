@@ -1818,10 +1818,12 @@ function sanitizeBranchList(rows){
     const name = String(row[0] || '').trim();
     const detail = String(row[1] || '').trim();
     const image = String(row[3] || '').trim();
-    const rawSheet = i === 0 ? BASE_KEY : normalizeSheetId(row[2]);
-    const sheetId = rawSheet || (i===0 ? BASE_KEY : '');
-    const hasVisual = !!(name || detail || image || sheetId);
-    if(!hasVisual) continue;
+    const explicitSheet = normalizeSheetId(row[2]);
+    const sheetId = i === 0 ? BASE_KEY : explicitSheet;
+    const hasConfiguredContent = i === 0
+      ? !!(name || detail || image)
+      : !!(name || detail || image || explicitSheet);
+    if(!hasConfiguredContent) continue;
     if(!sheetId) continue;
     out.push({
       idx: out.length,
@@ -1836,17 +1838,13 @@ function sanitizeBranchList(rows){
   return out;
 }
 async function loadBranchesFast(){
-  try{
-    const cached = JSON.parse(localStorage.getItem(BRANCH_CACHE_KEY) || 'null');
-    if(cached && Array.isArray(cached.items) && cached.items.length && (Date.now() - cached.ts) < 5*60*1000){
-      return cached.items;
-    }
-  }catch(_){ }
-
   const txt = await fetchCsvBySheetRangeFromKey(BASE_KEY, BRANCHES_SHEET_NAME, BRANCHES_RANGE, 5500);
   const rows = parseCSV(txt);
   const normalized = sanitizeBranchList(rows);
-  try{ localStorage.setItem(BRANCH_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: normalized })); }catch(_){ }
+  try{
+    if(normalized.length) localStorage.setItem(BRANCH_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: normalized }));
+    else localStorage.removeItem(BRANCH_CACHE_KEY);
+  }catch(_){ }
   return normalized;
 }
 function branchPlaceholder(name){
