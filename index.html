@@ -167,88 +167,99 @@ header {
 }
 
 /* ¡Logo Súper Gigante y Protagonista! */
-.logoWrap { 
-  width: 95px;  
-  height: 95px; 
-  border-radius: 28px; 
-  flex: 0 0 auto; 
+.logoWrap{
   position: relative;
-  /* Contenedor con perspectiva sutil */
-  perspective: 1000px;
-}
-
-/* ARO PRIMARIO: Grueso, vibrante y con rotación fluida */
-.logoWrap::before {
-  content: "";
-  position: absolute;
-  inset: -8px; /* Más grueso hacia afuera */
-  border-radius: 36px;
-  padding: 8px; /* Grosor expresivo del aro */
-  background: conic-gradient(
-    from 0deg, 
-    #00D46A, #0B5CFF, #FFC400, #FF2E2E, #00D46A
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  filter: blur(1.5px) drop-shadow(0 0 15px rgba(11, 92, 255, 0.8));
-  animation: rotateAro 6s linear infinite;
-  z-index: 1;
-}
-
-/* ARO SECUNDARIO: Más suave, entrelazado y en reversa */
-.logoWrap::after {
-  content: "";
-  position: absolute;
-  inset: -12px; 
-  border-radius: 40px;
-  padding: 10px; /* Aún más grueso para crear el aura externa */
-  background: conic-gradient(
-    from 180deg, 
-    #FF2E2E, #FFC400, #0B5CFF, #00D46A, #FF2E2E
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.7;
-  /* Blur más fuerte para que se vea como plasma natural */
-  filter: blur(8px) drop-shadow(0 0 20px rgba(0, 212, 106, 0.6));
-  animation: rotateAroRev 9s linear infinite;
-  z-index: 0;
-}
-
-/* EL LOGO (LA IMAGEN) */
-.logoWrap img {
-  position: relative;
-  width: 100%; 
-  height: 100%;
-  object-fit: cover;
+  width: 95px;
+  height: 95px;
   border-radius: 28px;
-  /* Borde de cristal reforzado */
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 
-    0 15px 35px rgba(0,0,0,0.6),
-    inset 0 0 15px rgba(255,255,255,0.2);
-  z-index: 2;
-  /* Respiración suave del logo */
-  animation: logoBreathPremium 4s ease-in-out infinite alternate;
+  flex: 0 0 auto;
 }
 
-/* ================== ANIMACIONES DE ALTA FLUIDEZ ================== */
-
-@keyframes rotateAro {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.logoWrap::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:34px;
+  padding:6px;
+  background:conic-gradient(
+    from 180deg at 50% 50%,
+    var(--accent1),
+    var(--accent2),
+    var(--accent3),
+    var(--accent1)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:.95;
+  filter:
+    drop-shadow(0 0 14px rgba(0,255,169,.25))
+    drop-shadow(0 0 10px rgba(39,215,255,.22));
+  animation:logoRing 4.2s linear infinite;
+  pointer-events:none;
+  z-index:1;
 }
 
-@keyframes rotateAroRev {
-  from { transform: rotate(360deg) scale(1.05); }
-  to { transform: rotate(0deg) scale(1.1); }
+.logoWrap::after{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:38px;
+  background:radial-gradient(
+    circle at 50% 40%,
+    rgba(255,255,255,.14),
+    rgba(0,255,169,.10),
+    transparent 62%
+  );
+  filter:blur(10px);
+  opacity:.55;
+  animation:logoGlow 1.8s ease-in-out infinite alternate;
+  pointer-events:none;
+  z-index:0;
 }
 
-@keyframes logoBreathPremium {
-  0% { transform: translateZ(0) scale(1); filter: brightness(1); }
-  100% { transform: translateZ(20px) scale(1.04); filter: brightness(1.15) saturate(1.2); }
+.logoWrap img{
+  position:relative;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.14),
+    0 0 0 6px rgba(255,255,255,.05),
+    0 0 22px rgba(0,255,169,.30),
+    0 0 22px rgba(39,215,255,.24);
+  animation:logoPulse 1.6s ease-in-out infinite alternate;
+  z-index:2;
+}
+
+@keyframes logoPulse{
+  from{
+    transform:translateY(0) scale(1);
+    filter:saturate(1.06);
+  }
+  to{
+    transform:translateY(-1px) scale(1.035);
+    filter:saturate(1.22) brightness(1.05);
+  }
+}
+
+@keyframes logoRing{
+  to{ transform:rotate(1turn); }
+}
+
+@keyframes logoGlow{
+  from{
+    transform:translateY(0);
+    opacity:.55;
+  }
+  to{
+    transform:translateY(-1px);
+    opacity:.85;
+  }
 }
 
 
@@ -882,12 +893,28 @@ body.search-has-text #raffles{ display:none !important; }
 
 @media(max-width:768px){
   header { padding: 12px 14px; gap: 10px; }
-  .logoWrap { width: 75px; height: 75px; border-radius: 22px; } 
-  .logoWrap img { border-radius: 22px; }
-  /* Ajustamos los aros para que no se salgan de la pantalla en móvil */
-  .logoWrap::before { inset: -6px; padding: 6px; border-radius: 28px; }
-  .logoWrap::after { inset: -9px; padding: 7px; border-radius: 32px; }
-  
+
+  .logoWrap{
+    width:75px;
+    height:75px;
+    border-radius:22px;
+  }
+
+  .logoWrap img{
+    border-radius:22px;
+  }
+
+  .logoWrap::before{
+    inset:-4px;
+    padding:5px;
+    border-radius:27px;
+  }
+
+  .logoWrap::after{
+    inset:-8px;
+    border-radius:31px;
+  }
+
   .brand-info h1 { font-size: 26px; }
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
