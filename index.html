@@ -2144,7 +2144,13 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       cleanup();
     })(placeholder, 1000);
 
-    const st=ALL[chosen]||'ocupado'; SEARCH_INPUT.value=String(parseInt(chosen,10));
+    const st=ALL[chosen]||'ocupado'; 
+    SEARCH_INPUT.value=String(parseInt(chosen,10));
+    
+    // ✅ Forzamos a que aparezca el botón de borrar (X)
+    const clearBtnX = document.getElementById('clearSearch');
+    if(clearBtnX) clearBtnX.classList.add('show');
+
     layer.innerHTML='';
     if(st==='libre'){ renderSearchOne(chosen); } else { clearSearchLayer(); msg('Boleta ocupada', true); }
     randomBtn.dataset.busy='';
