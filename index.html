@@ -170,92 +170,71 @@ header {
 .logoWrap { 
   width: 95px;  
   height: 95px; 
-  border-radius: 28px; 
+  border-radius: 26px; 
   flex: 0 0 auto; 
   position: relative;
 }
 
-/* 1. EL AURA DE PLASMA (El anillo orgánico exterior) */
+/* ARO 1: Interno, grueso, rotación a la derecha (Lento) */
 .logoWrap::before {
   content: "";
   position: absolute;
-  inset: -6px; /* Qué tanto se expande el plasma hacia afuera */
-  border-radius: 36px;
-  /* Gradiente con los colores de tu marca */
-  background: conic-gradient(
-    from 0deg, 
-    rgba(0, 212, 106, 0.9), 
-    rgba(11, 92, 255, 0.9), 
-    rgba(255, 196, 0, 0.9), 
-    rgba(255, 46, 46, 0.9), 
-    rgba(0, 212, 106, 0.9)
-  );
-  filter: blur(12px); /* Blur brutal para que se vea líquido/orgánico */
-  animation: plasmaSpin 10s linear infinite; /* Rotación ultra lenta y fluida (10 segundos) */
-  z-index: 0; /* Por detrás de la imagen */
+  inset: -6px; /* Expansión del aro */
+  border-radius: 32px;
+  padding: 6px; /* Grosor del aro (más grueso que tu original) */
+  background: conic-gradient(from 0deg at 50% 50%, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.9;
+  filter: blur(2px) drop-shadow(0 0 8px var(--accent3)); /* Blur sutil + resplandor */
+  animation: spinAro 8s linear infinite; /* 8 segundos: rotación muy elegante */
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* 2. EL EFECTO CRISTAL Y VIÑETA (El anillo interior y suavizado de bordes) */
+/* ARO 2: Externo, difuminado, rotación a la izquierda (Aún más lento) */
 .logoWrap::after {
   content: "";
   position: absolute;
-  inset: -2px; /* Un poco más grande que la imagen para encapsularla */
-  border-radius: 30px;
-  /* LA MAGIA DEL SUAVIZADO: 
-     - Viñeta oscura hacia adentro (suaviza los bordes del logo)
-     - Brillo blanco interior (borde de cristal)
-     - Sombra exterior para separar del plasma
-     - Borde blanco exterior sutil (Aro secundario)
-  */
-  box-shadow: 
-    inset 0 0 16px 6px rgba(2, 12, 27, 0.7), 
-    inset 0 0 0 1.5px rgba(255, 255, 255, 0.3), 
-    0 4px 12px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.15);
-  z-index: 3; /* Por encima de la imagen para que la viñeta la cubra */
+  inset: -10px; /* Sale un poco más para entrelazarse con el Aro 1 */
+  border-radius: 36px;
+  padding: 8px; /* Un poco más grueso */
+  /* Colores en orden distinto para crear contraste al cruzarse */
+  background: conic-gradient(from 180deg at 50% 50%, var(--accent3), var(--accent4), var(--accent1), var(--accent3));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.65;
+  filter: blur(6px) drop-shadow(0 0 12px var(--accent1)); /* Mucho más blur, efecto plasma/neón */
+  animation: spinAroRev 12s linear infinite; /* 12 segundos: rotación majestuosa en reversa */
   pointer-events: none;
+  z-index: 0;
 }
 
-/* 3. LA IMAGEN DEL LOGO */
+/* LA IMAGEN DEL LOGO */
 .logoWrap img {
   position: relative;
   width: 100%; 
   height: 100%;
   object-fit: cover;
-  border-radius: 28px;
-  border: none; /* Adiós bordes duros */
-  z-index: 1;
-  animation: logoBreathe 4s ease-in-out infinite alternate;
+  border-radius: 26px;
+  border: 2px solid rgba(255, 255, 255, 0.25); /* Borde tipo cristal */
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5); /* Sombra oscura para separar la imagen de los aros */
+  z-index: 2; /* Por encima de los aros */
+  animation: logoFloat 4s ease-in-out infinite alternate;
 }
 
-/* ================== LAS NUEVAS ANIMACIONES ORGÁNICAS ================== */
-@keyframes plasmaSpin {
-  0% { 
-    transform: rotate(0deg) scale(1); 
-    opacity: 0.8; 
-  }
-  50% { 
-    /* El aura "respira" (se hace más grande) a la mitad del giro */
-    transform: rotate(180deg) scale(1.12); 
-    opacity: 1; 
-  }
-  100% { 
-    transform: rotate(360deg) scale(1); 
-    opacity: 0.8; 
-  }
+/* ================== ANIMACIONES HARDWARE-ACCELERATED ================== */
+@keyframes spinAro {
+  to { transform: rotate(1turn); }
 }
-
-@keyframes logoBreathe {
-  0% { 
-    /* Reposo */
-    transform: translateY(0) scale(1); 
-    filter: saturate(1.1) brightness(1); 
-  }
-  100% { 
-    /* Efecto Parallax 3D: La imagen flota DENTRO de la cápsula de cristal */
-    transform: translateY(-2px) scale(1.03); 
-    filter: saturate(1.3) brightness(1.15); 
-  }
+@keyframes spinAroRev {
+  to { transform: rotate(-1turn); }
+}
+@keyframes logoFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); } /* Levitación sutil */
 }
 
 
@@ -890,11 +869,11 @@ body.search-has-text #raffles{ display:none !important; }
 @media(max-width:768px){
   header { padding: 12px 14px; gap: 12px; }
   
-  /* Redimensionado perfecto de todas las capas orgánicas para celular */
-  .logoWrap { width: 75px; height: 75px; border-radius: 24px; } 
-  .logoWrap img { border-radius: 24px; } 
-  .logoWrap::after { border-radius: 26px; } 
-  .logoWrap::before { border-radius: 30px; } 
+  /* Ajuste matemático para que el doble aro ensamble perfecto en móvil */
+  .logoWrap { width: 75px; height: 75px; border-radius: 22px; } 
+  .logoWrap img { border-radius: 22px; }
+  .logoWrap::before { inset: -5px; border-radius: 27px; padding: 5px; } 
+  .logoWrap::after { inset: -8px; border-radius: 30px; padding: 6px; }
 
   .brand-info h1 { font-size: 28px; }
   .search-bar { height: 48px; line-height: 48px; font-size: 22px; }
