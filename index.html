@@ -141,38 +141,39 @@ header {
 .brand-group {
   display: flex;
   align-items: center;
-  justify-content: center; 
-  gap: 18px; /* Espacio para el logo gigante */
+  justify-content: flex-start; /* ← AQUÍ ESTÁ LA MAGIA: Alineado a la izquierda */
+  gap: 18px; /* Espacio perfecto para que respire */
   width: 100%;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .brand-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start; /* Asegura que el texto nazca desde la izquierda */
   gap: 4px;
 }
 
 .brand-info h1 {
   margin: 0;
   font-weight: 1000;
-  font-size: clamp(28px, 8vw, 38px); /* ¡Mucho más grande! */
+  font-size: clamp(28px, 8vw, 42px); /* Aún más grande e imponente */
   letter-spacing: 1px;
   line-height: 1;
   color: #ffffff;
   text-transform: uppercase;
-  text-shadow: 0 4px 16px rgba(0,0,0,0.3); /* Sombra para que resalte en el fondo vivo */
+  text-shadow: 0 4px 16px rgba(0,0,0,0.3); 
 }
 
-/* ¡Logo Gigante y Protagonista! */
+/* ¡Logo Súper Gigante y Protagonista! */
 .logoWrap { 
-  width: 82px; 
-  height: 82px; 
-  border-radius: 24px; 
+  width: 95px;  /* ← ¡Casi 100px de puro protagonismo! */
+  height: 95px; 
+  border-radius: 26px; 
   flex: 0 0 auto; 
-  position: relative; 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
 .logoWrap::before{
   content:"";
@@ -316,8 +317,6 @@ header {
 .contact-info { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
 .contact-info p { margin: 0; font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 700; letter-spacing: 0.5px; }
 
-/* Ajuste del logo para que no ocupe tanta altura vertical */
-.logoWrap { width: 66px; height: 66px; border-radius: 20px; flex: 0 0 auto; position: relative; }
 
 /* =========================================================
    BOTÓN FINALIZAR (Llamado a la acción - Éxito)
@@ -853,11 +852,15 @@ body.search-has-text #raffles{ display:none !important; }
 }
 
 @media(max-width:768px){
-  header { padding: 8px 10px; gap: 8px; }
-  .logoWrap { width: 42px; height: 42px; }
-  .brand-info h1 { font-size: 22px; }
-  .search-bar { height: 44px; line-height: 44px; }
-  .random-button, .finish-top-button { height: 44px; font-size: 12px; }
+  header { padding: 12px 14px; gap: 12px; }
+  
+  /* Garantizamos que en celular el logo siga viéndose pro y grande */
+  .logoWrap { width: 75px; height: 75px; border-radius: 22px; } 
+  .brand-info h1 { font-size: 28px; }
+  
+  /* Ajuste de botones y buscador para que quepan perfectos */
+  .search-bar { height: 48px; line-height: 48px; font-size: 22px; }
+  .random-button, .finish-top-button { height: 48px; font-size: 13px; }
   #raffles { margin-top: 10px; gap: 10px; }
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
