@@ -28,17 +28,9 @@
   --brand-3:var(--brand-yellow);  /* tercer color */
 
   /* Fondo y paneles (alegre + premium, pero legible) */
-  --bg-solid:#07152A;
-  ---bg-grad: linear-gradient(160deg, #0A192F 0%, #040B16 40%, #010408 100%);
-  --bg-deep: rgba(4, 11, 22, 0.85);
-    radial-gradient(1200px 820px at 12% 10%, rgba(0,212,106,.28) 0, transparent 58%),
-    radial-gradient(1100px 760px at 86% 18%, rgba(11,92,255,.26) 0, transparent 60%),
-    radial-gradient(980px 680px at 24% 90%, rgba(255,196,0,.22) 0, transparent 62%),
-    radial-gradient(900px 640px at 92% 92%, rgba(255,46,46,.14) 0, transparent 64%),
-    linear-gradient(135deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.02) 35%, rgba(255,255,255,.06) 100%),
-    linear-gradient(135deg, #07152A 0%, #0B2B66 45%, #0A0F1F 100%);
-
-  --bg-deep:rgba(7,21,42,.78);  /* header */
+ --bg-solid:#07152A;
+  --bg-grad: linear-gradient(160deg, #0A192F 0%, #040B16 40%, #010408 100%);
+  --bg-deep: rgba(4, 11, 22, 0.85);  /* header */
   --ink:#ffffff;
   --muted:rgba(255,255,255,.86);
 
@@ -210,13 +202,57 @@ header {
   caret-color: #ffffff; -webkit-appearance: none; appearance: none;
   transition: all 0.2s ease;
 }
-.search-bar::placeholder { color: rgba(255,255,255,.5) }
-.search-bar:focus { background: var(--panel); box-shadow: inset 0 0 0 2px var(--accent1), 0 0 20px rgba(11,92,255,.35) }
-.action-buttons {
-  display: flex;
+.search-wrapper {
+  position: relative;
   width: 100%;
-  gap: 10px;
+  max-width: 240px; /* Ancho optimizado solo para 4 dígitos */
+  margin: 0 auto; /* Centrado perfecto */
 }
+
+/* Icono decorativo */
+.search-icon {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  font-size: 18px; opacity: 0.6; pointer-events: none; z-index: 2;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  width: 100%;
+  height: 56px; /* Más robusta */
+  border-radius: 18px; 
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0 44px; /* Espacio para lupa y botón X */
+  font-size: 26px; /* Números gigantes y legibles */
+  font-weight: 900;
+  letter-spacing: 4px; /* Separación de números tipo PIN */
+  text-align: center; /* Centrado total */
+  background: rgba(0, 0, 0, 0.4); 
+  color: #ffffff;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,.2);
+  caret-color: var(--brand-green); -webkit-appearance: none; appearance: none;
+  transition: all 0.2s ease;
+}
+
+.search-bar::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 4px; font-weight: 700; }
+.search-bar:focus { 
+  background: rgba(11, 92, 255, 0.1); 
+  border-color: var(--accent1);
+  box-shadow: inset 0 0 0 1px var(--accent1), 0 0 25px rgba(11,92,255,.4); 
+}
+
+/* Botón flotante para Borrar (X) */
+.clear-search {
+  position: absolute; right: 8px; top: 50%;
+  transform: translateY(-50%) scale(0); /* Oculto por defecto */
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255, 46, 46, 0.8); color: white; border: none;
+  font-size: 20px; font-weight: bold; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+.clear-search.show { transform: translateY(-50%) scale(1); }
+.clear-search:active { background: #FF2E2E; transform: translateY(-50%) scale(0.85); }
 
 /* =========================================================
    BOTÓN ALEATORIO (Premium & Mágico)
@@ -1967,7 +2003,27 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   SEARCH_INPUT.addEventListener('pointerdown',instantFocus,{passive:false});
   SEARCH_INPUT.addEventListener('touchstart',instantFocus,{passive:false});
   SEARCH_INPUT.addEventListener('click',()=>{ if(document.activeElement!==SEARCH_INPUT) SEARCH_INPUT.focus({preventScroll:true}); },{passive:true});
-  SEARCH_INPUT.addEventListener('input',()=>{ rerenderSearch(); });
+  const clearBtn = document.getElementById('clearSearch');
+  
+  SEARCH_INPUT.addEventListener('input', () => { 
+    rerenderSearch(); 
+    // Mostrar u ocultar el botón 'X'
+    if(clearBtn) {
+      if(SEARCH_INPUT.value.length > 0) clearBtn.classList.add('show');
+      else clearBtn.classList.remove('show');
+    }
+  });
+
+  // Funcionalidad del botón 'X'
+  if(clearBtn) {
+    clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      SEARCH_INPUT.value = '';
+      clearBtn.classList.remove('show');
+      rerenderSearch();
+      SEARCH_INPUT.focus(); // Devuelve el teclado al usuario
+    });
+  }
   SEARCH_INPUT.addEventListener('blur',()=>{ if(!MODAL_OPEN && SEARCH_INPUT.value.trim().length===0){ document.body.classList.remove('search-has-text'); clearSearchLayer(); } });
 
   // Botón ALEATORIO
