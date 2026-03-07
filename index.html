@@ -170,87 +170,92 @@ header {
 .logoWrap { 
   width: 95px;  
   height: 95px; 
-  border-radius: 26px; 
+  border-radius: 28px; 
   flex: 0 0 auto; 
   position: relative;
 }
 
-/* 1. El Anillo Rotatorio de Energía (conic-gradient vibrante) */
+/* 1. EL AURA DE PLASMA (El anillo orgánico exterior) */
 .logoWrap::before {
   content: "";
   position: absolute;
-  inset: -6px; /* Envuelve perfectamente al logo de 95px */
-  border-radius: 32px; 
-  padding: 4px; /* Grosor del anillo de luz */
-  /* Arcoíris de colores de la marca para más impacto */
+  inset: -6px; /* Qué tanto se expande el plasma hacia afuera */
+  border-radius: 36px;
+  /* Gradiente con los colores de tu marca */
   background: conic-gradient(
-    from 180deg at 50% 50%, 
-    #00D46A, #0B5CFF, #FFC400, #FF2E2E, #00D46A
+    from 0deg, 
+    rgba(0, 212, 106, 0.9), 
+    rgba(11, 92, 255, 0.9), 
+    rgba(255, 196, 0, 0.9), 
+    rgba(255, 46, 46, 0.9), 
+    rgba(0, 212, 106, 0.9)
   );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.95;
-  filter: drop-shadow(0 0 16px rgba(0, 212, 106, 0.6)) drop-shadow(0 0 12px rgba(11, 92, 255, 0.6));
-  animation: logoRingPremium 3.5s linear infinite;
-  pointer-events: none;
-  z-index: 2;
+  filter: blur(12px); /* Blur brutal para que se vea líquido/orgánico */
+  animation: plasmaSpin 10s linear infinite; /* Rotación ultra lenta y fluida (10 segundos) */
+  z-index: 0; /* Por detrás de la imagen */
 }
 
-/* 2. El Resplandor Trasero (Aura pulsante gigante) */
+/* 2. EL EFECTO CRISTAL Y VIÑETA (El anillo interior y suavizado de bordes) */
 .logoWrap::after {
   content: "";
   position: absolute;
-  inset: -15px; /* Aura extendida hacia afuera */
-  border-radius: 40px;
-  background: radial-gradient(circle at 50% 50%, rgba(11, 92, 255, 0.5), rgba(0, 212, 106, 0.25), transparent 70%);
-  filter: blur(14px);
-  opacity: 0.6;
-  animation: logoGlowPremium 2s ease-in-out infinite alternate;
+  inset: -2px; /* Un poco más grande que la imagen para encapsularla */
+  border-radius: 30px;
+  /* LA MAGIA DEL SUAVIZADO: 
+     - Viñeta oscura hacia adentro (suaviza los bordes del logo)
+     - Brillo blanco interior (borde de cristal)
+     - Sombra exterior para separar del plasma
+     - Borde blanco exterior sutil (Aro secundario)
+  */
+  box-shadow: 
+    inset 0 0 16px 6px rgba(2, 12, 27, 0.7), 
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.3), 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  z-index: 3; /* Por encima de la imagen para que la viñeta la cubra */
   pointer-events: none;
-  z-index: 0;
 }
 
-/* 3. La Imagen del Logo (Levitación 3D y Contraste) */
+/* 3. LA IMAGEN DEL LOGO */
 .logoWrap img {
   position: relative;
   width: 100%; 
   height: 100%;
   object-fit: cover;
-  border-radius: 26px;
-  border: 2px solid rgba(255, 255, 255, 0.4); /* Borde de cristal */
-  box-shadow:
-    0 0 0 4px rgba(255, 255, 255, 0.1),
-    0 12px 30px rgba(0, 0, 0, 0.5), /* Sombra profunda para que resalte */
-    0 0 30px rgba(0, 212, 106, 0.4); /* Brillo propio */
-  animation: logoPulsePremium 2s ease-in-out infinite alternate;
+  border-radius: 28px;
+  border: none; /* Adiós bordes duros */
   z-index: 1;
+  animation: logoBreathe 4s ease-in-out infinite alternate;
 }
 
-/* ================== LAS ANIMACIONES ================== */
-@keyframes logoRingPremium {
-  to { transform: rotate(1turn); }
+/* ================== LAS NUEVAS ANIMACIONES ORGÁNICAS ================== */
+@keyframes plasmaSpin {
+  0% { 
+    transform: rotate(0deg) scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    /* El aura "respira" (se hace más grande) a la mitad del giro */
+    transform: rotate(180deg) scale(1.12); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: rotate(360deg) scale(1); 
+    opacity: 0.8; 
+  }
 }
 
-@keyframes logoPulsePremium {
-  from { 
+@keyframes logoBreathe {
+  0% { 
+    /* Reposo */
     transform: translateY(0) scale(1); 
     filter: saturate(1.1) brightness(1); 
   }
-  to { 
-    /* Efecto de "Levitar" y acercarse al usuario */
-    transform: translateY(-4px) scale(1.05); 
+  100% { 
+    /* Efecto Parallax 3D: La imagen flota DENTRO de la cápsula de cristal */
+    transform: translateY(-2px) scale(1.03); 
     filter: saturate(1.3) brightness(1.15); 
-    box-shadow:
-      0 0 0 4px rgba(255, 255, 255, 0.2),
-      0 18px 35px rgba(0, 0, 0, 0.6), /* Sombra cae más bajo */
-      0 0 40px rgba(0, 212, 106, 0.6);
   }
-}
-
-@keyframes logoGlowPremium {
-  from { transform: scale(0.9); opacity: 0.5; }
-  to { transform: scale(1.1); opacity: 0.9; filter: blur(18px); }
 }
 
 
