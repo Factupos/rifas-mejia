@@ -183,10 +183,10 @@ header {
   --logo-r: 28px;
   --ring-core: 4px;
   --ring-outer: 11px;
-  --wave-cyan: rgba(39,215,255,.98);
-  --wave-green: rgba(0,255,169,.94);
-  --wave-gold: rgba(255,211,77,.86);
-  --wave-pink: rgba(255,61,154,.60);
+  --wave-cyan: rgba(39,215,255,.95);
+  --wave-green: rgba(0,255,169,.90);
+  --wave-gold: rgba(255,211,77,.82);
+  --wave-pink: rgba(255,61,154,.55);
 
   width:95px;
   height:95px;
@@ -211,7 +211,7 @@ header {
   border-radius:calc(var(--logo-r) + 4px);
   padding:var(--ring-core);
   background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.36) 0 8%, transparent 18%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.30) 0 8%, transparent 18%),
     conic-gradient(
       from 210deg,
       rgba(255,255,255,0) 0deg,
@@ -226,14 +226,14 @@ header {
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
-  opacity:.34;
-  filter:
-    blur(.45px)
-    drop-shadow(0 0 10px rgba(39,215,255,.30))
-    drop-shadow(0 0 20px rgba(0,255,169,.20))
-    drop-shadow(0 0 28px rgba(255,211,77,.12));
-  transform:scale(.99);
-  animation:ringRippleCore 3.8s cubic-bezier(.22,.61,.36,1) infinite;
+  opacity:.30;
+filter:
+  blur(.45px)
+  drop-shadow(0 0 10px rgba(39,215,255,.28))
+  drop-shadow(0 0 20px rgba(0,255,169,.18))
+  drop-shadow(0 0 26px rgba(255,211,77,.10));
+transform:scale(.99);
+  animation: ringRippleCore 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:1;
 }
 
@@ -242,14 +242,14 @@ header {
   border-radius:calc(var(--logo-r) + 12px);
   padding:var(--ring-outer);
   background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.22) 0 10%, transparent 22%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0 10%, transparent 22%),
     conic-gradient(
       from 180deg,
       rgba(255,255,255,0) 0deg,
-      rgba(39,215,255,.22) 44deg,
-      rgba(0,255,169,.34) 120deg,
-      rgba(255,211,77,.24) 200deg,
-      rgba(255,61,154,.18) 282deg,
+      rgba(39,215,255,.18) 44deg,
+      rgba(0,255,169,.28) 120deg,
+      rgba(255,211,77,.18) 200deg,
+      rgba(255,61,154,.14) 282deg,
       rgba(255,255,255,0) 360deg
     );
   -webkit-mask:
@@ -258,38 +258,15 @@ header {
   -webkit-mask-composite:xor;
   mask-composite:exclude;
   opacity:0;
-  filter:
-    blur(1.9px)
-    drop-shadow(0 0 14px rgba(39,215,255,.20))
-    drop-shadow(0 0 30px rgba(0,255,169,.18))
-    drop-shadow(0 0 40px rgba(255,211,77,.16))
-    drop-shadow(0 0 22px rgba(255,61,154,.12));
-  transform:scale(.92);
-  animation:ringRippleOuter 3.8s cubic-bezier(.22,.61,.36,1) infinite;
+filter:
+  blur(1.8px)
+  drop-shadow(0 0 14px rgba(39,215,255,.18))
+  drop-shadow(0 0 30px rgba(0,255,169,.16))
+  drop-shadow(0 0 38px rgba(255,211,77,.14))
+  drop-shadow(0 0 20px rgba(255,61,154,.10));
+transform:scale(.92);
+  animation: ringRippleOuter 3.8s cubic-bezier(.22,.61,.36,1) infinite;
   z-index:0;
-}
-
-.logoWrap .logo-glint{
-  position:absolute;
-  inset:-10px;
-  border-radius:calc(var(--logo-r) + 10px);
-  pointer-events:none;
-  z-index:3;
-  opacity:0;
-  mix-blend-mode:screen;
-  background:
-    radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
-      rgba(255,255,255,.98) 0%,
-      rgba(255,255,255,.75) 7%,
-      rgba(255,211,77,.50) 13%,
-      rgba(39,215,255,.26) 22%,
-      rgba(39,215,255,0) 34%);
-  filter:
-    blur(.4px)
-    drop-shadow(0 0 10px rgba(255,255,255,.42))
-    drop-shadow(0 0 16px rgba(39,215,255,.26))
-    drop-shadow(0 0 24px rgba(255,211,77,.18));
-  animation:glintOrbit 3.8s linear infinite;
 }
 
 .logoWrap img{
@@ -300,16 +277,16 @@ header {
   border-radius:inherit;
   z-index:2;
   border:1px solid rgba(255,255,255,.16);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.12),
-    0 0 0 5px rgba(255,255,255,.045),
-    0 16px 32px rgba(0,0,0,.36),
-    0 0 24px rgba(39,215,255,.12),
-    0 0 18px rgba(0,255,169,.09),
-    0 0 14px rgba(255,211,77,.05),
-    inset 0 1px 0 rgba(255,255,255,.20),
-    inset 0 -10px 18px rgba(0,0,0,.12);
-  animation:logoWaterBreath 3.8s ease-in-out infinite;
+ box-shadow:
+  0 0 0 1px rgba(255,255,255,.12),
+  0 0 0 5px rgba(255,255,255,.045),
+  0 16px 32px rgba(0,0,0,.36),
+  0 0 24px rgba(39,215,255,.12),
+  0 0 18px rgba(0,255,169,.09),
+  0 0 14px rgba(255,211,77,.05),
+  inset 0 1px 0 rgba(255,255,255,.20),
+  inset 0 -10px 18px rgba(0,0,0,.12);
+  animation: logoWaterBreath 3.8s ease-in-out infinite;
 }
 
 .logoWrap > img{
@@ -331,16 +308,16 @@ header {
     transform:scale(1.02);
     filter:
       blur(.45px)
-      drop-shadow(0 0 14px rgba(39,215,255,.36))
-      drop-shadow(0 0 24px rgba(0,255,169,.24))
-      drop-shadow(0 0 30px rgba(255,211,77,.16));
+      drop-shadow(0 0 14px rgba(39,215,255,.34))
+      drop-shadow(0 0 24px rgba(0,255,169,.22))
+      drop-shadow(0 0 28px rgba(255,211,77,.14));
   }
   30%{
-    opacity:.66;
+    opacity:.62;
     transform:scale(1.065);
   }
   48%{
-    opacity:.24;
+    opacity:.22;
     transform:scale(1.10);
   }
   64%{
@@ -348,7 +325,7 @@ header {
     transform:scale(1.00);
   }
   82%{
-    opacity:.84;
+    opacity:.82;
     transform:scale(1.018);
     filter:
       blur(.38px)
@@ -375,11 +352,11 @@ header {
     transform:scale(.96);
   }
   22%{
-    opacity:.96;
+    opacity:.92;
     transform:scale(1.05);
   }
   38%{
-    opacity:.50;
+    opacity:.48;
     transform:scale(1.16);
   }
   54%{
@@ -398,56 +375,16 @@ header {
     filter:brightness(1) saturate(1.02);
   }
   25%{
-    transform:translateY(-1px) scale(1.014);
-    filter:brightness(1.05) saturate(1.10);
-  }
-  50%{
-    transform:translateY(0) scale(1.008);
-    filter:brightness(1.03) saturate(1.06);
-  }
-  75%{
-    transform:translateY(-.5px) scale(1.012);
+    transform:translateY(-1px) scale(1.012);
     filter:brightness(1.04) saturate(1.08);
   }
-}
-
-@keyframes glintOrbit{
-  0%{
-    --gx: 22%;
-    --gy: 24%;
-    opacity:0;
-    transform:scale(.96);
-  }
-  8%{
-    opacity:0;
-  }
-  16%{
-    --gx: 50%;
-    --gy: 10%;
-    opacity:.95;
-    transform:scale(1);
-  }
-  26%{
-    --gx: 80%;
-    --gy: 24%;
-    opacity:1;
-  }
-  38%{
-    --gx: 92%;
-    --gy: 50%;
-    opacity:.78;
-  }
   50%{
-    --gx: 80%;
-    --gy: 78%;
-    opacity:0;
-    transform:scale(1.02);
+    transform:translateY(0) scale(1.006);
+    filter:brightness(1.02) saturate(1.04);
   }
-  100%{
-    --gx: 22%;
-    --gy: 24%;
-    opacity:0;
-    transform:scale(.96);
+  75%{
+    transform:translateY(-.5px) scale(1.01);
+    filter:brightness(1.03) saturate(1.06);
   }
 }
 
@@ -1085,8 +1022,8 @@ body.search-has-text #raffles{ display:none !important; }
 
   .logoWrap{
     --logo-r: 22px;
-    --ring-core: 3px;
-    --ring-outer: 8px;
+    --ring-core: 2.5px;
+    --ring-outer: 6px;
     width:75px;
     height:75px;
     border-radius:22px;
@@ -1098,8 +1035,7 @@ body.search-has-text #raffles{ display:none !important; }
       0 0 0 1px rgba(255,255,255,.10),
       0 0 0 3px rgba(255,255,255,.03),
       0 10px 22px rgba(0,0,0,.32),
-      0 0 16px rgba(39,215,255,.10),
-      0 0 10px rgba(0,255,169,.08),
+      0 0 14px rgba(39,215,255,.08),
       inset 0 1px 0 rgba(255,255,255,.16),
       inset 0 -8px 14px rgba(0,0,0,.10);
   }
@@ -1112,11 +1048,6 @@ body.search-has-text #raffles{ display:none !important; }
   .logoWrap::after{
     inset:-9px;
     border-radius:31px;
-  }
-
-  .logoWrap .logo-glint{
-    inset:-8px;
-    border-radius:30px;
   }
 
   .brand-info h1 { font-size: 26px; }
@@ -1172,10 +1103,7 @@ body.search-has-text #raffles{ display:none !important; }
 
   <header>
     <div class="brand-group">
-      <div class="logoWrap">
-  <span class="logo-glint"></span>
-  <img id="logoImg" src="" alt="Logo" referrerpolicy="no-referrer">
-</div>
+      <div class="logoWrap"><img id="logoImg" src="" alt="Logo" referrerpolicy="no-referrer"></div>
       <div class="brand-info">
         <h1 id="houseName">Rifas</h1>
         <div class="contact-info">
