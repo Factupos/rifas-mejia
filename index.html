@@ -889,8 +889,13 @@ body.search-has-text #raffles{ display:none !important; }
 
 @media(max-width:768px){
   header { padding: 12px 14px; gap: 12px; }
-  .logoWrap { width: 75px; height: 75px; border-radius: 22px; } 
-  .logoWrap img { border-radius: 22px; } /* ← Esto es clave */
+  
+  /* Redimensionado perfecto de todas las capas orgánicas para celular */
+  .logoWrap { width: 75px; height: 75px; border-radius: 24px; } 
+  .logoWrap img { border-radius: 24px; } 
+  .logoWrap::after { border-radius: 26px; } 
+  .logoWrap::before { border-radius: 30px; } 
+
   .brand-info h1 { font-size: 28px; }
   .search-bar { height: 48px; line-height: 48px; font-size: 22px; }
   .random-button, .finish-top-button { height: 48px; font-size: 13px; }
