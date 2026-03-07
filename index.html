@@ -98,8 +98,6 @@ body {
   padding-top: calc(var(--header-h, 90px) + 20px) !important; 
   padding-bottom: 40px;
   
-  /* Animación suave cuando el carrito empuja el contenido */
-  transition: padding-top 0.25s cubic-bezier(0.2, 1, 0.2, 1);
   
   overscroll-behavior-y: contain; touch-action: manipulation;
 }
@@ -1782,8 +1780,9 @@ function onTileTap(el, num, pt){
 
   // Ya estaba seleccionada
   if(CART_ITEMS.includes(n)){
-    setTileSelected(n, true);
-    msg('Ya está en el carrito: ' + n, false);
+    removeFromCart(n);
+    msg('Removida del carrito: ' + n, false);
+    el.dataset.busy=''; // Liberamos el botón para que se pueda volver a tocar
     return;
   }
 
