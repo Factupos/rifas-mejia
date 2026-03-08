@@ -1226,72 +1226,16 @@ body.search-has-text #raffles{ display:none !important; }
 @keyframes branchProgress{from{width:0}to{width:100%}}
 @keyframes branchEnterIn{from{opacity:0; transform:translateY(15px) scale(.96)}to{opacity:1; transform:translateY(0) scale(1)}}
 
-./* =========================================================
-   BOTÓN VOLVER AL PANEL (Ultra Premium & Identificable)
-   ========================================================= */
-.branch-back-btn {
-  position: fixed; 
-  top: calc(env(safe-area-inset-top, 0px) + 16px); 
-  right: 16px; /* Se mantiene arriba a la derecha */
-  z-index: 102;
-  width: 44px; 
-  height: 44px; 
-  border-radius: 50%; /* Círculo perfecto tipo burbuja */
-  
-  /* Súper transparente */
-  background: rgba(255, 255, 255, 0.05); 
-  
-  /* Borde ultra fino que simula la tensión de la burbuja */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #ffffff; 
-  display: none; 
-  align-items: center; 
-  justify-content: center;
-  padding: 0;
-  
-  /* Cristal esmerilado suave */
-  backdrop-filter: blur(12px) saturate(120%); 
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  
-  /* Sombras y reflejos 3D para el efecto líquido/burbuja */
-  box-shadow: 
-    inset 0 4px 6px rgba(255, 255, 255, 0.15), /* Reflejo interno de luz (arriba) */
-    inset 0 -4px 6px rgba(0, 0, 0, 0.1), /* Sombra interna (abajo) */
-    0 8px 20px rgba(0, 0, 0, 0.25); /* Sombra proyectada suave */
-  
-  cursor: pointer; 
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+.branch-back-btn{
+  position:fixed; top:calc(env(safe-area-inset-top,0px) + 12px); right:12px; z-index:102;
+  width:44px; height:44px; border-radius:22px; border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.12); color:#fff; display:none; align-items:center; justify-content:center;
+  backdrop-filter:blur(16px) saturate(130%); -webkit-backdrop-filter:blur(16px) saturate(130%);
+  box-shadow:0 10px 25px rgba(0,0,0,.3); cursor:pointer; font-size:20px; font-weight:900;
+  transition:transform .2s ease, background .2s ease, border-color .2s ease;
 }
-
-.branch-back-btn.show { 
-  display: flex; 
-  animation: bubbleFloatIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* El icono sutilmente iluminado */
-.branch-back-btn svg {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-  transition: transform 0.2s ease;
-}
-
-/* Efecto al tocar: la burbuja se contrae y brilla más */
-.branch-back-btn:active {
-  transform: scale(0.85); 
-  background: rgba(255, 255, 255, 0.15); 
-  box-shadow: 
-    inset 0 2px 8px rgba(255, 255, 255, 0.2), 
-    0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.branch-back-btn:active svg {
-  transform: scale(0.9);
-}
-
-@keyframes bubbleFloatIn {
-  from { opacity: 0; transform: translateY(-15px) scale(0.8); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
+.branch-back-btn.show{display:flex}
+.branch-back-btn:active{transform:scale(.90); background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.4)}
 
 @media (max-width:380px){
   .branch-brand .mini-logo{ width: 60px; height: 60px; }
@@ -1749,12 +1693,7 @@ body.search-has-text #raffles{ display:none !important; }
   </div>
 </div>
 
-<button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-  </svg>
-</button>
+  <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">⌂</button>
 
   <header>
     <div class="brand-group">
@@ -1805,15 +1744,15 @@ body.search-has-text #raffles{ display:none !important; }
 /* =========================================================
    ✅ CONFIG (VISIBLES AL INICIO — como pediste)
    ========================================================= */
-const BASE_KEY = '1FMVI9US7MolgCRlKPsKGYF7ducTSTbrIDmP6htgwWG8';
+const BASE_KEY = '1Gd7hQdTi-WTet34Ryebd2Izemj6KeDNgyNpYg8vBTWw';
 const URL_QS = new URLSearchParams(location.search);
 const SELECTED_BRANCH_KEY = (URL_QS.get('ssid') || '').trim();
 const BRANCH_OPEN_MODE = (URL_QS.get('branchopen') || '').trim() === '1';
 const BRANCH_OPEN_BID = (URL_QS.get('bid') || '').trim();
 const KEY = SELECTED_BRANCH_KEY || BASE_KEY;
-const GID_RAFFLES = '1661661343';   // A: Número, B: Libre/Asignado
-const GID_CONFIG  = '1977832725';    // Config_Publica
-const GID_NOTIFICATIONS = '662101636'; // Notificaciones (logo)
+const GID_RAFFLES = '1661037065';   // A: Número, B: Libre/Asignado
+const GID_CONFIG  = '1842804307';    // Config_Publica
+const GID_NOTIFICATIONS = '1029797655'; // Notificaciones (logo)
 const PROXY = 'https://csv-proxy.jeisendigital.workers.dev/?u=';
 const SUCURSALES_SHEET_NAME = 'Sucursales';
 const SUCURSALES_RANGE = 'A:E';
@@ -2139,28 +2078,40 @@ function getBranchVisual(branch){
 }
 async function fetchBranches(){
   try{
-    const txt = await fetchCsvBySheetRange(SUCURSALES_SHEET_NAME, SUCURSALES_RANGE, 5000);
+    const txt = await fetchCsvBySheetRange(
+      SUCURSALES_SHEET_NAME,
+      SUCURSALES_RANGE,
+      5000
+    );
     const rows = parseCSV(txt);
     if(!rows || rows.length <= 1) return [];
+
     const out = [];
+
     for(let i=1;i<rows.length;i++){
       const row = rows[i] || [];
+
       const name = String(row[0] || '').trim();
       const detail = String(row[1] || '').trim();
       const rawSheetId = String(row[2] || '').trim();
       const image = String(row[3] || '').trim();
-      
-      // ✅ CONDICIÓN PREMIUM: Validar si la columna E es True
-      const isActiveRaw = row[4];
-      const isActive = normalizeBoolCell(isActiveRaw);
-      
-      // Si no es explícitamente TRUE (o 'Si', '1'), la ignoramos por completo
-      if(isActive !== true) continue;
+      const enabledRaw = String(row[4] || '').trim().toLowerCase();
 
+      const enabled =
+        enabledRaw === 'true' ||
+        enabledRaw === 'verdadero' ||
+        enabledRaw === '1' ||
+        enabledRaw === 'si' ||
+        enabledRaw === 'sí';
+
+      if(!enabled) continue;
       if(!name && !detail && !image && !rawSheetId) continue;
+
       const branchIndex = out.length;
       const sheetId = branchIndex === 0 ? BASE_KEY : sanitizeSheetId(rawSheetId);
+
       if(!name || !sheetId) continue;
+
       out.push({
         index: branchIndex,
         rowIndex: i,
@@ -2168,9 +2119,11 @@ async function fetchBranches(){
         detail,
         image,
         sheetId,
+        enabled: true,
         isBase: branchIndex === 0
       });
     }
+
     return out;
   }catch(_){
     return [];
