@@ -1107,23 +1107,19 @@ body.search-has-text #raffles{ display:none !important; }
   position: relative; 
   display: flex; 
   flex-direction: column; 
-  gap: 14px; 
+  gap: 10px; /* Reducimos el espacio entre el texto y la imagen */
   width: 100%; 
   min-height: 320px;
   background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
   border: 1px solid rgba(255,255,255,.2); 
   border-radius: 32px; 
-  /* Redujimos el padding de la tarjeta para regalarle más espacio a la imagen */
-  padding: 14px; 
+  padding: 12px; /* Reducimos el padding interno para que la imagen sea más ancha */
   box-shadow: 0 15px 40px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.15);
   backdrop-filter: blur(20px) saturate(140%); 
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   cursor: pointer; 
   isolation: isolate;
-  
-  /* MAGIA 1: Corta de raíz cualquier desborde (como pasó en tu foto 2) */
   overflow: hidden; 
-  
   transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, border-color .2s ease;
   animation: branchEnterIn .4s cubic-bezier(.22,1,.36,1) backwards;
 }
@@ -1142,29 +1138,27 @@ body.search-has-text #raffles{ display:none !important; }
 }
 .branch-card:active::before, .branch-card.is-entering::before { opacity: 1; }
 
-/* Expansión inteligente si hay 1 sola sucursal */
+/* Liberamos la altura para que la imagen pueda crecer hacia abajo (Scroll permitido) */
 .branch-grid.one .branch-card { 
   max-width: 480px; 
-  height: 100%; 
-  min-height: calc(100dvh - 140px); 
+  height: auto; /* Al poner auto, la tarjeta crece junto con la imagen */
+  min-height: calc(100dvh - 120px); 
 }
 
-/* Detalles: Fondo súper premium, minimalista y maximizado a lo ancho */
+/* Detalles: Más compactos para robar menos espacio */
 .branch-card-detail {
   margin: 0; 
-  /* Poco margen lateral (6px) para que el texto se estire y no robe altura */
-  padding: 12px 6px; 
-  /* Cristal tintado oscuro, muy elegante y profesional */
+  padding: 8px 6px; /* Aún más delgado arriba y abajo */
   background: rgba(0, 8, 25, 0.4); 
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  font-size: clamp(14px, 4vw, 18px); 
-  line-height: 1.35; 
+  border-radius: 16px; /* Borde sutil acorde al tamaño compacto */
+  font-size: clamp(13px, 3.5vw, 16px); /* Letra ligeramente más pequeña */
+  line-height: 1.25; 
   font-weight: 800; 
   color: #ffffff; 
   text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 0 12px rgba(255,255,255,0.2);
-  letter-spacing: 0.3px; 
+  letter-spacing: 0.2px; 
   text-align: center;
   box-shadow: inset 0 4px 15px rgba(0,0,0,0.2);
   flex: 0 0 auto; 
@@ -1172,25 +1166,21 @@ body.search-has-text #raffles{ display:none !important; }
   overflow-wrap: break-word;
 }
 
-/* Contenedor de Imagen: Toma el resto del espacio exacto sin romper la caja */
+/* Contenedor de Imagen: Fluye naturalmente con el tamaño de la imagen */
 .branch-thumb {
   position: relative; 
   width: 100%; 
-  /* MAGIA 2: flex 1 1 0 y min-height 0 evitan que estalle si el texto es muy largo */
-  flex: 1 1 0; 
-  min-height: 0; 
+  flex: 1 0 auto; /* Permite crecer según la imagen */
   display: flex; 
   align-items: center; 
   justify-content: center;
 }
 
-/* IMAGEN: Totalmente anclada y obligada a no salirse jamás */
+/* IMAGEN: Toma el 100% del ancho y crece hacia abajo proporcionalmente */
 .branch-thumb img {
-  /* MAGIA 3: Nunca empuja los bordes de la tarjeta, dibuja estrictamente en su rectángulo */
-  position: absolute; 
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100%; 
-  height: 100%; 
+  position: relative; /* Volvemos a relativo para que dicte el alto de la tarjeta */
+  width: 100%; /* Prioridad absoluta al ancho */
+  height: auto; /* Mantiene la proporción perfecta original de tu flyer */
   object-fit: contain; 
   border-radius: 16px; 
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
@@ -1198,11 +1188,11 @@ body.search-has-text #raffles{ display:none !important; }
 }
 
 .branch-card:active .branch-thumb img, .branch-card.is-entering .branch-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .branch-thumb-fallback {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  position: relative; width: 100%; height: 200px;
   display: flex; align-items: center; justify-content: center; 
   font-size: 54px; background: transparent; opacity: 0.8;
 }
