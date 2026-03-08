@@ -1157,31 +1157,40 @@ body.search-has-text #raffles{ display:none !important; }
 }
 
 /* Contenedor de Imagen adaptativo y elástico */
-.branch-thumb{
-  position:relative; width:100%; 
-  /* La magia elástica: crece, pero si el texto es muy largo, se encoge suavemente hasta un límite */
-  flex: 1 1 120px; 
-  min-height: 120px; 
-  border-radius:22px; display:flex; align-items:center; justify-content:center;
+.branch-thumb {
+  position: relative; /* Clave para anclar la imagen */
+  width: 100%; 
+  flex: 1; /* Toma todo el espacio disponible que deja el texto */
+  min-height: 120px; /* Altura mínima de seguridad */
+  border-radius: 22px; 
 }
-.branch-thumb img{
-  width:100%; height:100%; 
-  object-fit:contain; /* Ajuste perfecto sin recortes */
-  display:block;
+
+.branch-thumb img {
+  position: absolute; /* LA MAGIA: Obliga a la imagen a no salirse de los límites */
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; /* Se ajusta perfectamente sin deformarse */
+  display: block;
   
-  /* ESQUINAS SUAVIZADAS Y NATURALES */
+  /* Esquinas suavizadas y premium */
   border-radius: 16px; 
   
-  /* Efecto 3D en la imagen */
+  /* Efecto 3D elegante */
   filter: drop-shadow(0 12px 24px rgba(0,0,0,0.45));
   transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
 }
+
 .branch-card:active .branch-thumb img, .branch-card.is-entering .branch-thumb img {
   transform: scale(1.04);
 }
-.branch-thumb-fallback{
-  width:100%; height:100%; display:flex; align-items:center; justify-content:center; 
-  font-size:54px; background:transparent; opacity:0.8;
+
+.branch-thumb-fallback {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center; 
+  font-size: 54px; background: transparent; opacity: 0.8;
 }
 
 /* Overlays y botones base */
