@@ -1020,6 +1020,7 @@ body.search-has-text #raffles{ display:none !important; }
 
 
 /* ====== PANEL DE SUCURSALES ====== */
+/* ====== PANEL DE SUCURSALES (Premium & Optimizado) ====== */
 .branch-mode header,
 .branch-mode #searchResult,
 .branch-mode #raffles,
@@ -1028,61 +1029,145 @@ body.search-has-text #raffles{ display:none !important; }
 .branch-mode #loadingMessage,
 .branch-mode .top-veil{display:none !important}
 .branch-mode{padding-top:0 !important;padding-bottom:0 !important;overflow:hidden}
+
 .branch-shell{
   position:fixed; inset:0; z-index:99997; display:none; overflow:auto;
   background:
-    radial-gradient(900px 700px at 0% 0%, rgba(0,212,106,.22) 0, transparent 60%),
-    radial-gradient(900px 700px at 100% 0%, rgba(11,92,255,.24) 0, transparent 62%),
-    radial-gradient(900px 700px at 50% 100%, rgba(255,196,0,.18) 0, transparent 65%),
-    linear-gradient(135deg, #07152A 0%, #0B2B66 48%, #09152c 100%);
+    radial-gradient(100vw 100vh at 0% 0%, rgba(0,212,106,.15) 0, transparent 60%),
+    radial-gradient(100vw 100vh at 100% 0%, rgba(11,92,255,.18) 0, transparent 62%),
+    radial-gradient(100vw 100vh at 50% 100%, rgba(255,196,0,.12) 0, transparent 65%),
+    linear-gradient(135deg, #051021 0%, #0A1E45 50%, #051021 100%);
 }
 .branch-shell.show{display:block}
 .branch-shell::before{
   content:""; position:fixed; inset:-25%; pointer-events:none;
-  background:conic-gradient(from 180deg, rgba(255,255,255,.06), rgba(255,255,255,0), rgba(255,255,255,.05), rgba(255,255,255,0));
-  filter:blur(22px); animation:branchHalo 14s linear infinite;
+  background:conic-gradient(from 180deg, rgba(255,255,255,.04), rgba(255,255,255,0), rgba(255,255,255,.03), rgba(255,255,255,0));
+  filter:blur(22px); animation:branchHalo 20s linear infinite;
 }
 @keyframes branchHalo{to{transform:rotate(1turn)}}
-.branch-inner{position:relative; z-index:1; min-height:100dvh; padding:calc(env(safe-area-inset-top,0px) + 18px) 16px 22px; display:flex; flex-direction:column;}
-.branch-topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px}
-.branch-brand{display:flex; align-items:center; gap:12px; min-width:0}
-.branch-brand .mini-logo{width:54px; height:54px; border-radius:18px; overflow:hidden; flex:0 0 auto; border:1px solid rgba(255,255,255,.18); box-shadow:0 10px 24px rgba(0,0,0,.28), 0 0 18px rgba(0,212,106,.14)}
-.branch-brand .mini-logo img{width:100%; height:100%; object-fit:cover; display:block}
-.branch-overline{font-size:11px; font-weight:900; letter-spacing:1.4px; text-transform:uppercase; opacity:.72; margin:0 0 4px}
-.branch-main-title{margin:0; font-size:clamp(24px,7vw,34px); line-height:1.02; font-weight:1000; text-shadow:0 10px 30px rgba(0,0,0,.3)}
-.branch-main-sub{margin:6px 0 0; font-size:13px; opacity:.88; font-weight:700; max-width:56ch; line-height:1.35}
-.branch-badge{padding:10px 12px; border-radius:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); font-size:11px; font-weight:900; letter-spacing:1px; text-transform:uppercase; white-space:nowrap}
-.branch-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:10px; flex:1; align-content:start}
-.branch-grid.one{grid-template-columns:1fr; min-height:calc(100dvh - 140px)}
-.branch-card{
-  position:relative; display:flex; flex-direction:column; gap:10px; min-width:0; width:100%;
-  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-  border:1px solid rgba(255,255,255,.16); border-radius:24px; padding:14px;
-  box-shadow:0 16px 36px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);
-  backdrop-filter:blur(16px) saturate(135%); -webkit-backdrop-filter:blur(16px) saturate(135%);
-  overflow:hidden; isolation:isolate; cursor:pointer; color:#fff; text-align:left;
-  transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease, border-color .22s ease;
+
+.branch-inner{
+  position:relative; z-index:1; min-height:100dvh; 
+  padding:calc(env(safe-area-inset-top,0px) + 20px) 16px 30px; 
+  display:flex; flex-direction:column; align-items:center;
 }
-.branch-card::before{content:""; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg, rgba(0,212,106,.20), rgba(11,92,255,.16), rgba(255,196,0,.14)); opacity:.9; z-index:-2}
-.branch-card::after{content:""; position:absolute; inset:0; background:radial-gradient(circle at top right, rgba(255,255,255,.18), transparent 38%); z-index:-1; pointer-events:none}
-.branch-card:active,.branch-card.is-entering{transform:scale(.97); box-shadow:0 22px 42px rgba(0,0,0,.35), 0 0 24px rgba(11,92,255,.18); border-color:rgba(255,255,255,.28)}
-.branch-grid.one .branch-card{min-height:calc(100dvh - 180px); justify-content:center; padding:18px}
-.branch-card.single{min-height:100%; justify-content:center}
-.branch-thumb{position:relative; width:100%; border-radius:20px; overflow:hidden; background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); border:1px solid rgba(255,255,255,.14); aspect-ratio:1 / .72; box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 10px 24px rgba(0,0,0,.24)}
-.branch-grid.one .branch-thumb{aspect-ratio:1 / .95; min-height:44vh}
-.branch-thumb img{width:100%; height:100%; object-fit:cover; display:block}
-.branch-thumb-fallback{width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:42px; background:linear-gradient(135deg, rgba(11,92,255,.32), rgba(0,212,106,.20));}
-.branch-card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
-.branch-card-name{margin:0; font-size:clamp(20px,5.8vw,28px); font-weight:1000; line-height:1.02; text-shadow:0 6px 18px rgba(0,0,0,.2)}
-.branch-card-meta{flex:0 0 auto; padding:8px 10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); font-size:10px; font-weight:900; letter-spacing:1px; text-transform:uppercase; opacity:.9}
-.branch-card-detail{margin:0; font-size:clamp(14px,3.8vw,17px); line-height:1.34; opacity:.95; font-weight:760}
-.branch-card-cta{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:2px}
-.branch-card-cta strong{font-size:12px; letter-spacing:1.3px; text-transform:uppercase}
-.branch-card-cta span{display:inline-flex; width:42px; height:42px; border-radius:50%; align-items:center; justify-content:center; background:linear-gradient(135deg, rgba(0,212,106,.95), rgba(11,92,255,.92)); box-shadow:0 10px 26px rgba(0,0,0,.28), 0 0 18px rgba(0,212,106,.22); font-size:20px; font-weight:900}
-.branch-toast{margin-top:12px; padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); font-size:12px; font-weight:780; line-height:1.35; opacity:.92}
+
+/* Cabecera Centralizada y Elegante */
+.branch-topbar{
+  display:flex; flex-direction:column; align-items:center; 
+  gap:16px; margin-bottom:24px; width:100%; text-align:center;
+  animation: fadeSlideDown 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.branch-brand{
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+
+/* Logo con mayor presencia y efecto Premium */
+.branch-brand .mini-logo{
+  width:110px; height:110px; border-radius:32px; overflow:hidden; 
+  border:2px solid rgba(255,255,255,.2); 
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.4), 
+    0 0 30px rgba(11,92,255,.25),
+    inset 0 2px 10px rgba(255,255,255,.3);
+  position:relative;
+  animation: floatLogo 4s ease-in-out infinite alternate;
+}
+@keyframes floatLogo {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+.branch-brand .mini-logo img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  background: radial-gradient(circle at 50% 20%, rgba(255,255,255,.10), transparent 42%);
+}
+
+/* Título (Nombre de la empresa) */
+.branch-main-title{
+  margin:0; font-size:clamp(28px, 8vw, 42px); font-weight:1000; 
+  letter-spacing:1px; text-transform:uppercase; color:#ffffff;
+  text-shadow: 0 8px 20px rgba(0,0,0,.5);
+}
+
+/* Grilla optimizada */
+.branch-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); 
+  gap:20px; width:100%; max-width:1100px; flex:1; align-content:start;
+}
+.branch-grid.one{ display:flex; justify-content:center; }
+
+/* Tarjetas (Diseño limpio enfocado en la imagen) */
+.branch-card{
+  position:relative; display:flex; flex-direction:column; gap:16px; 
+  width:100%; min-height: 380px;
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.2); border-radius:32px; padding:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.15);
+  backdrop-filter:blur(20px) saturate(140%); -webkit-backdrop-filter:blur(20px) saturate(140%);
+  cursor:pointer; color:#fff; text-align:center; isolation:isolate;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, border-color .25s ease;
+  animation: branchEnterIn .5s cubic-bezier(.22,1,.36,1) backwards;
+}
+.branch-grid .branch-card:nth-child(2) { animation-delay: 0.1s; }
+.branch-grid .branch-card:nth-child(3) { animation-delay: 0.2s; }
+
+.branch-card::before{
+  content:""; position:absolute; inset:-1px; border-radius:inherit; 
+  background:linear-gradient(135deg, rgba(0,212,106,.20), rgba(11,92,255,.16)); 
+  opacity:0; z-index:-2; transition:opacity .3s ease;
+}
+.branch-card:active, .branch-card.is-entering{
+  transform:scale(.95); 
+  box-shadow:0 10px 30px rgba(0,0,0,.4), 0 0 40px rgba(11,92,255,.2); 
+  border-color:rgba(255,255,255,.4);
+}
+.branch-card:active::before, .branch-card.is-entering::before { opacity: 1; }
+
+.branch-grid.one .branch-card{ max-width:440px; min-height: 55vh; }
+
+/* Detalles coronando la tarjeta */
+.branch-card-detail{
+  margin:0; font-size:clamp(16px, 4.5vw, 20px); line-height:1.4; 
+  font-weight:900; color:#ffffff; text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  letter-spacing: 0.5px; z-index: 2;
+}
+
+/* Contenedor de Imagen optimizado al máximo */
+.branch-thumb{
+  position:relative; width:100%; flex:1; min-height:0; /* Clave para que flex no desborde */
+  border-radius:20px; display:flex; align-items:center; justify-content:center;
+}
+.branch-thumb img{
+  width:100%; height:100%; 
+  object-fit:contain; /* La imagen se ve completa sin cortes */
+  display:block;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5)); /* Le da un efecto 3D si es PNG transparente */
+  transition: transform 0.3s ease;
+}
+.branch-card:active .branch-thumb img, .branch-card.is-entering .branch-thumb img {
+  transform: scale(1.05);
+}
+.branch-thumb-fallback{
+  width:100%; height:100%; display:flex; align-items:center; justify-content:center; 
+  font-size:64px; background:transparent; opacity:0.8;
+}
+
+.branch-toast{
+  margin-top:20px; padding:14px 24px; border-radius:999px; 
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); 
+  font-size:14px; font-weight:800; letter-spacing:0.5px; opacity:.9;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2); backdrop-filter:blur(10px);
+}
+
+/* Resto de overlays y botones base */
 .branch-enter-overlay{position:fixed; inset:0; z-index:99998; display:none; align-items:center; justify-content:center; padding:22px; background:rgba(4,10,24,.56); backdrop-filter:blur(18px) saturate(130%); -webkit-backdrop-filter:blur(18px) saturate(130%)}
 .branch-enter-overlay.show{display:flex}
-.branch-enter-card{width:min(520px,92vw); border-radius:28px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08)); border:1px solid rgba(255,255,255,.18); box-shadow:0 28px 70px rgba(0,0,0,.42); text-align:center; animation:branchEnterIn .36s cubic-bezier(.22,1,.36,1) both}
+.branch-enter-card{width:min(520px,92vw); border-radius:28px; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08)); border:1px solid rgba(255,255,255,.18); box-shadow:0 28px 70px rgba(0,0,0,.42); text-align:center;}
 .branch-enter-logo{width:82px; height:82px; border-radius:24px; margin:0 auto 14px; overflow:hidden; border:1px solid rgba(255,255,255,.18); box-shadow:0 14px 36px rgba(0,0,0,.26), 0 0 22px rgba(0,212,106,.15)}
 .branch-enter-logo img{width:100%;height:100%;object-fit:cover;display:block}
 .branch-enter-kicker{margin:0 0 6px; font-size:11px; font-weight:900; letter-spacing:1.8px; text-transform:uppercase; opacity:.76}
@@ -1091,22 +1176,22 @@ body.search-has-text #raffles{ display:none !important; }
 .branch-enter-progress{margin-top:16px; height:12px; border-radius:999px; overflow:hidden; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12)}
 .branch-enter-progress > i{display:block; width:0; height:100%; border-radius:inherit; background:linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2)); box-shadow:0 0 18px rgba(0,212,106,.28); animation:branchProgress 1.05s ease forwards .06s}
 @keyframes branchProgress{from{width:0}to{width:100%}}
-@keyframes branchEnterIn{from{opacity:0; transform:translateY(14px) scale(.96)}to{opacity:1; transform:translateY(0) scale(1)}}
+@keyframes branchEnterIn{from{opacity:0; transform:translateY(20px) scale(.95)}to{opacity:1; transform:translateY(0) scale(1)}}
+
 .branch-back-btn{
-  position:fixed; top:calc(env(safe-area-inset-top,0px) + 10px); right:12px; z-index:102;
-  width:44px; height:44px; border-radius:16px; border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08); color:#fff; display:none; align-items:center; justify-content:center;
+  position:fixed; top:calc(env(safe-area-inset-top,0px) + 14px); right:14px; z-index:102;
+  width:48px; height:48px; border-radius:24px; border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.12); color:#fff; display:none; align-items:center; justify-content:center;
   backdrop-filter:blur(16px) saturate(130%); -webkit-backdrop-filter:blur(16px) saturate(130%);
-  box-shadow:0 10px 28px rgba(0,0,0,.22); cursor:pointer; font-size:19px; font-weight:900;
-  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease, border-color .2s ease;
+  box-shadow:0 10px 28px rgba(0,0,0,.3); cursor:pointer; font-size:22px; font-weight:900;
+  transition:transform .2s ease, background .2s ease, border-color .2s ease;
 }
 .branch-back-btn.show{display:flex}
-.branch-back-btn:active{transform:scale(.92); background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.28)}
+.branch-back-btn:active{transform:scale(.90); background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.4)}
+
 @media (max-width:560px){
-  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
-  .branch-card{border-radius:22px; padding:12px}
-  .branch-thumb{border-radius:18px}
-  .branch-card-name{font-size:clamp(18px,5vw,24px)}
+  .branch-grid{ gap:16px; }
+  .branch-card{ min-height: 340px; border-radius:28px; padding:16px; gap: 12px;}
 }
 @media(max-width:768px){
   header { padding: 12px 14px; gap: 10px; }
