@@ -1282,19 +1282,17 @@ body.search-has-text #raffles{ display:none !important; }
    ========================================================= */
 .branch-scroll-indicator.premium-ghost {
   position: fixed;
-  bottom: 45px;
+  bottom: 10px; /* Muy pegado abajo para tener más recorrido de subida */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 8px; /* Menos espacio para un look más compacto */
-  pointer-events: none;
+  pointer-events: none; /* No interfiere si el usuario toca ahí */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.6s;
-  text-align: center;
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s;
 }
 
 .branch-scroll-indicator.premium-ghost.show {
@@ -1304,8 +1302,8 @@ body.search-has-text #raffles{ display:none !important; }
 
 .ghost-hand-container {
   position: relative;
-  width: 70px; /* Tamaño perfecto para la mano vectorial */
-  height: 90px;
+  width: 100px;  /* Más ancha, ocupa más espacio visual */
+  height: 140px; /* Más alta para permitir la estela */
   display: flex;
   justify-content: center;
 }
@@ -1313,57 +1311,55 @@ body.search-has-text #raffles{ display:none !important; }
 .ghost-hand-image {
   width: 100%;
   height: 100%;
-  animation: ghostSwipeUp 2.4s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  /* Animación extendida a 3.2 segundos para que dure más */
+  animation: ghostHumanSwipe 3.2s infinite cubic-bezier(0.35, 0.1, 0.25, 1);
   transform-origin: bottom center;
 }
 
-/* El aura o "plasma" detrás de la mano */
+/* El plasma detrás de la mano (proporcional al nuevo tamaño) */
 .ghost-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle, rgba(0, 212, 106, 0.2) 0%, rgba(11, 92, 255, 0.15) 40%, rgba(0,0,0,0) 70%);
+  width: 85px;
+  height: 85px;
+  background: radial-gradient(circle, rgba(0, 212, 106, 0.25) 0%, rgba(11, 92, 255, 0.15) 50%, rgba(0,0,0,0) 80%);
   border-radius: 50%;
-  filter: blur(12px);
-  animation: ghostPulse 2.4s infinite;
+  filter: blur(15px);
+  animation: ghostPulseHuman 3.2s infinite;
   z-index: -1;
 }
 
-/* Texto estilo cine/premium */
-.premium-text {
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
-  animation: textFade 2.4s infinite;
+/* --- ANIMACIONES DE LARGO RECORRIDO --- */
+@keyframes ghostHumanSwipe {
+  0% { 
+    transform: translateY(90px) scale(0.85); /* Nace muy desde abajo y un poco pequeña */
+    opacity: 0; 
+  }
+  15% { 
+    opacity: 0.9; /* Aparece rápido */
+    transform: translateY(40px) scale(1.05); /* Alcanza su tamaño máximo */
+  }
+  60% { 
+    opacity: 0.85; 
+    transform: translateY(-25px) scale(1); /* Sube lentamente, visible por mucho rato */
+    filter: drop-shadow(0 0 18px rgba(0, 212, 106, 0.6)); 
+  }
+  85% { 
+    opacity: 0; 
+    transform: translateY(-60px) scale(0.9); /* Se desvanece suavemente arriba */
+  }
+  100% { 
+    opacity: 0; 
+    transform: translateY(-60px); 
+  }
 }
 
-/* --- ANIMACIONES --- */
-@keyframes ghostSwipeUp {
-  0% { transform: translateY(35px) scale(0.85); opacity: 0; }
-  25% { opacity: 1; transform: translateY(15px) scale(1); }
-  60% { opacity: 0.8; filter: drop-shadow(0 0 10px rgba(0, 212, 106, 0.5)); }
-  85% { opacity: 0; transform: translateY(-15px) scale(0.9); }
-  100% { opacity: 0; transform: translateY(-15px); }
-}
-
-@keyframes ghostPulse {
-  0%, 100% { transform: translate(-50%, -40%) scale(0.8); opacity: 0.3; }
-  50% { transform: translate(-50%, -40%) scale(1.4); opacity: 0.8; }
-}
-
-@keyframes textFade {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); }
+@keyframes ghostPulseHuman {
+  0%, 100% { transform: translate(-50%, -10%) scale(0.8); opacity: 0.2; }
+  40% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.9; }
+  85% { transform: translate(-50%, -80%) scale(0.9); opacity: 0; }
 }
     
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
@@ -1431,15 +1427,16 @@ body.search-has-text #raffles{ display:none !important; }
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
     <div class="ghost-hand-container">
       
-      <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="ghost-hand-image" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="ghostGrad" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stop-color="rgba(11, 92, 255, 0.1)" />
-            <stop offset="40%" stop-color="rgba(0, 212, 106, 0.7)" />
+            <stop offset="0%" stop-color="rgba(11, 92, 255, 0.05)" />
+            <stop offset="35%" stop-color="rgba(0, 212, 106, 0.6)" />
+            <stop offset="85%" stop-color="rgba(255, 255, 255, 0.95)" />
             <stop offset="100%" stop-color="rgba(255, 255, 255, 1)" />
           </linearGradient>
-          <filter id="neonGlow">
-            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+          <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
             <feMerge>
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -1447,15 +1444,11 @@ body.search-has-text #raffles{ display:none !important; }
           </filter>
         </defs>
         
-        <path d="M35 25 L50 10 L65 25" stroke="rgba(255,255,255,0.7)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)" />
-        <path d="M42 35 L50 27 L58 35" stroke="rgba(0,212,106,0.4)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-        
-        <path d="M62 50V43a4.5 4.5 0 0 0-9 0v-20a4.5 4.5 0 0 0-9 0v31l-3.5-3a4.5 4.5 0 0 0-6.5 1l-2 3c-1.5 2.5-1 6 1.5 8l7 6A12 12 0 0 0 46 80h5a12 12 0 0 0 12-12v-13z" fill="url(#ghostGrad)" filter="url(#neonGlow)"/>
+        <path d="M89.6,56.1 c-1.6-4.5-6.6-6.9-11.2-5.4 c-0.8-4.5-5.2-7.5-9.7-6.5 c-1.2-4.2-5.6-6.6-9.9-5.3 c-2-5-7.8-7.5-12.8-5.5 c-4.6,1.8-6.8,6.9-5,11.5 l2.7,6.8 c-3.9-3.2-9.6-3.8-14.1-1.3 c-5.4,3-7.3,9.8-4.3,15.2 l13.7,24.8 c5.4,9.8,15.8,15.9,27.1,15.9 h6.1 c13.4,0,25.2-8.7,28.8-21.6 l6.8-24.5 C109.5,69.1,106,62.1,100.5,60.2 L89.6,56.1 z" fill="url(#ghostGrad)" filter="url(#neonGlow)"/>
       </svg>
 
       <div class="ghost-glow"></div>
     </div>
-    <span class="premium-text">Desliza para ver más</span>
   </div>
 
 
