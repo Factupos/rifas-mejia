@@ -1669,10 +1669,13 @@ function openBranch(branch){
       at: Date.now()
     }));
   }catch(_){ }
-  showBranchEnterOverlay(branch);
-  setTimeout(()=>{
-    location.href = buildPanelUrl(safeSheetId, { branchopen:true, bid: branchBid });
-  }, 880);
+
+  // Una sola carga: eliminamos la pantalla intermedia de entrada
+  // y dejamos únicamente el boot real de la página destino.
+  const active = document.querySelector(`.branch-card[data-branch-index="${Number(branch.index ?? 0)}"]`);
+  if(active) active.classList.add('is-entering');
+
+  location.href = buildPanelUrl(safeSheetId, { branchopen:true, bid: branchBid });
 }
 function renderBranchSelector(branches){
   BRANCHES = Array.isArray(branches) ? branches.slice() : [];
