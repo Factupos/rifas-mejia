@@ -1921,7 +1921,46 @@ function renderBranchSelector(branches){
   if(shell) shell.classList.add('show');
   hideBranchEnterOverlay();
   setBranchBackVisibility();
+  
+  // Activar el control del indicador de scroll
+  manageScrollIndicator();
+
   return true;
+}
+
+    function manageScrollIndicator() {
+  const shell = document.getElementById('branchShell');
+  const indicator = document.getElementById('branchScrollIndicator');
+  if (!shell || !indicator) return;
+
+  // Si hay 1 sola sucursal o ninguna, forzamos ocultarlo y nos salimos
+  if (BRANCHES.length <= 1) {
+    indicator.classList.remove('show');
+    return;
+  }
+
+  const checkScroll = () => {
+    // Calculamos si hay scroll disponible (altura total mayor a la altura visible)
+    const canScroll = shell.scrollHeight > shell.clientHeight + 10;
+    
+    // Verificamos si ya está cerca del final (damos 30px de margen)
+    const isAtBottom = Math.ceil(shell.scrollTop + shell.clientHeight) >= shell.scrollHeight - 30;
+
+    if (canScroll && !isAtBottom) {
+      indicator.classList.add('show');
+    } else {
+      indicator.classList.remove('show');
+    }
+  };
+
+  // Verificamos al instante
+  checkScroll();
+  // Verificamos de nuevo tras medio segundo por si las imágenes tardaron en inflar el tamaño del grid
+  setTimeout(checkScroll, 500);
+
+  // Escuchar eventos de scroll y redimensionamiento sin bloquear el rendimiento (passive: true)
+  shell.addEventListener('scroll', checkScroll, { passive: true });
+  window.addEventListener('resize', checkScroll, { passive: true });
 }
 function hideBranchSelector(){
   BRANCH_MODE = false;
