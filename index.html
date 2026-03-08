@@ -1282,14 +1282,14 @@ body.search-has-text #raffles{ display:none !important; }
    ========================================================= */
 .branch-scroll-indicator.premium-ghost {
   position: fixed;
-  bottom: 10px; /* Muy pegado abajo para tener más recorrido de subida */
+  bottom: 25px; /* Altura perfecta para tener buen recorrido visual */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: none; /* No interfiere si el usuario toca ahí */
+  pointer-events: none;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s;
@@ -1302,8 +1302,8 @@ body.search-has-text #raffles{ display:none !important; }
 
 .ghost-hand-container {
   position: relative;
-  width: 100px;  /* Más ancha, ocupa más espacio visual */
-  height: 140px; /* Más alta para permitir la estela */
+  width: 110px;  /* Ancha, ocupa espacio para ser clara */
+  height: 150px; /* Alta para permitir el recorrido de subida y estela */
   display: flex;
   justify-content: center;
 }
@@ -1311,55 +1311,55 @@ body.search-has-text #raffles{ display:none !important; }
 .ghost-hand-image {
   width: 100%;
   height: 100%;
-  /* Animación extendida a 3.2 segundos para que dure más */
-  animation: ghostHumanSwipe 3.2s infinite cubic-bezier(0.35, 0.1, 0.25, 1);
+  /* Animación extendida para que dure más y sea majestuosa */
+  animation: ghostHumanSwipeExpressive 3.2s infinite cubic-bezier(0.35, 0.1, 0.25, 1);
   transform-origin: bottom center;
 }
 
-/* El plasma detrás de la mano (proporcional al nuevo tamaño) */
+/* El plasma detrás de la mano */
 .ghost-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -40%);
-  width: 85px;
-  height: 85px;
-  background: radial-gradient(circle, rgba(0, 212, 106, 0.25) 0%, rgba(11, 92, 255, 0.15) 50%, rgba(0,0,0,0) 80%);
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, rgba(0, 212, 106, 0.3) 0%, rgba(11, 92, 255, 0.18) 50%, rgba(0,0,0,0) 80%);
   border-radius: 50%;
-  filter: blur(15px);
-  animation: ghostPulseHuman 3.2s infinite;
+  filter: blur(16px);
+  animation: ghostPulseHuman actualizado 3.2s infinite;
   z-index: -1;
 }
 
-/* --- ANIMACIONES DE LARGO RECORRIDO --- */
-@keyframes ghostHumanSwipe {
+/* --- ANIMACIONES DE LARGO RECORRIDO Y ALTA EXPRESIVIDAD --- */
+@keyframes ghostHumanSwipeExpressive {
   0% { 
-    transform: translateY(90px) scale(0.85); /* Nace muy desde abajo y un poco pequeña */
+    transform: translateY(95px) scale(0.8); /* Nace desde muy abajo y compacta */
     opacity: 0; 
   }
   15% { 
-    opacity: 0.9; /* Aparece rápido */
-    transform: translateY(40px) scale(1.05); /* Alcanza su tamaño máximo */
+    opacity: 0.95; /* Aparece rápido y brillante */
+    transform: translateY(45px) scale(1.05); /* Alcanza tamaño máximo */
   }
   60% { 
-    opacity: 0.85; 
-    transform: translateY(-25px) scale(1); /* Sube lentamente, visible por mucho rato */
-    filter: drop-shadow(0 0 18px rgba(0, 212, 106, 0.6)); 
+    opacity: 0.9; 
+    transform: translateY(-20px) scale(1); /* Sube lentamente, visible por mucho rato */
+    filter: drop-shadow(0 0 20px rgba(0, 212, 106, 0.65)); 
   }
   85% { 
     opacity: 0; 
-    transform: translateY(-60px) scale(0.9); /* Se desvanece suavemente arriba */
+    transform: translateY(-65px) scale(0.85); /* Se desvanece suavemente arriba */
   }
   100% { 
     opacity: 0; 
-    transform: translateY(-60px); 
+    transform: translateY(-65px); 
   }
 }
 
-@keyframes ghostPulseHuman {
-  0%, 100% { transform: translate(-50%, -10%) scale(0.8); opacity: 0.2; }
-  40% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.9; }
-  85% { transform: translate(-50%, -80%) scale(0.9); opacity: 0; }
+@keyframes ghostPulseHumanActualizado {
+  0%, 100% { transform: translate(-50%, -10%) scale(0.85); opacity: 0.3; }
+  45% { transform: translate(-50%, -50%) scale(1.45); opacity: 1; }
+  85% { transform: translate(-50%, -85%) scale(0.95); opacity: 0; }
 }
     
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
@@ -1427,16 +1427,16 @@ body.search-has-text #raffles{ display:none !important; }
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
     <div class="ghost-hand-container">
       
-      <svg class="ghost-hand-image" viewBox="0 0 120 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="ghostGrad" x1="50%" y1="100%" x2="50%" y2="0%">
             <stop offset="0%" stop-color="rgba(11, 92, 255, 0.05)" />
-            <stop offset="35%" stop-color="rgba(0, 212, 106, 0.6)" />
+            <stop offset="30%" stop-color="rgba(0, 212, 106, 0.65)" />
             <stop offset="85%" stop-color="rgba(255, 255, 255, 0.95)" />
             <stop offset="100%" stop-color="rgba(255, 255, 255, 1)" />
           </linearGradient>
-          <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <filter id="neonGlow" x="-25%" y="-25%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
             <feMerge>
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -1444,9 +1444,9 @@ body.search-has-text #raffles{ display:none !important; }
           </filter>
         </defs>
         
-        <path d="M89.6,56.1 c-1.6-4.5-6.6-6.9-11.2-5.4 c-0.8-4.5-5.2-7.5-9.7-6.5 c-1.2-4.2-5.6-6.6-9.9-5.3 c-2-5-7.8-7.5-12.8-5.5 c-4.6,1.8-6.8,6.9-5,11.5 l2.7,6.8 c-3.9-3.2-9.6-3.8-14.1-1.3 c-5.4,3-7.3,9.8-4.3,15.2 l13.7,24.8 c5.4,9.8,15.8,15.9,27.1,15.9 h6.1 c13.4,0,25.2-8.7,28.8-21.6 l6.8-24.5 C109.5,69.1,106,62.1,100.5,60.2 L89.6,56.1 z" fill="url(#ghostGrad)" filter="url(#neonGlow)"/>
+        <path d="M72.1,48.2c-1.2-4.1-5.6-6.6-9.7-5.3c-1-3.6-4.6-6.1-8.3-5.3c-0.8-3.4-4-5.6-7.3-5.1c-1.3-3.6-4.9-6-8.6-5c-3.5,1-5.6,4.7-4.6,8.2l2.3,7.9c-4.1-3.1-9.9-3-13.6,0.3c-4.2,3.8-4.4,10.2-0.6,14.4l10.9,19.3c4.1,7.2,12.1,11.6,20.4,11.6h4.8c10.3,0,19.3-6.6,22.1-16.5l5.2-18.7C77.4,56.5,75.4,51.8,72.1,48.2z M65,65.8l-4.5,16.2c-2,7.2-8.5,12.1-15.9,12.1h-4.8c-6,0-11.7-3.2-14.7-8.4L14.2,66.4c-2.7-3.1-2.6-7.8,0.5-10.6c2.7-2.4,6.7-2.4,9.6,0l9.3,10.1v-34c0-2.6,2.1-4.7,4.7-4.7s4.7,2.1,4.7,4.7V62.4c0,1.3,1,2.3,2.3,2.3c1.3,0,2.3-1,2.3-2.3v-23c0-2.6,2.1-4.7,4.7-4.7s4.7,2.1,4.7,4.7v23c0,1.3,1,2.3,2.3,2.3c1.3,0,2.3-1,2.3-2.3v-19c0-2.6,2.1-4.7,4.7-4.7c2.6,0,4.7,2.1,4.7,4.7V62.4z" fill="url(#ghostGrad)" filter="url(#neonGlow)"/>
       </svg>
-
+      
       <div class="ghost-glow"></div>
     </div>
   </div>
