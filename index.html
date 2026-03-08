@@ -1277,16 +1277,19 @@ body.search-has-text #raffles{ display:none !important; }
 
   .brand-info h1 { font-size: 26px; }
 }
+/* =========================================================
+   INDICADOR DE SCROLL PREMIUM: EFECTO FANTASMA VECTORIAL
+   ========================================================= */
 .branch-scroll-indicator.premium-ghost {
   position: fixed;
-  bottom: 50px; /* Un poco más arriba para destacar */
+  bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
-  flex-direction: column; /* Texto abajo de la mano */
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 8px; /* Menos espacio para un look más compacto */
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -1294,96 +1297,73 @@ body.search-has-text #raffles{ display:none !important; }
   text-align: center;
 }
 
-/* Estado activo: Aparece suavemente */
 .branch-scroll-indicator.premium-ghost.show {
   opacity: 1;
   visibility: visible;
 }
 
-/* Contenedor de la mano y efectos */
 .ghost-hand-container {
   position: relative;
-  width: 80px; /* Tamaño elegante de la mano */
-  height: 120px;
-  overflow: hidden; /* Corta la estela al salir */
+  width: 70px; /* Tamaño perfecto para la mano vectorial */
+  height: 90px;
+  display: flex;
+  justify-content: center;
 }
 
-/* La imagen de la mano fantasma */
 .ghost-hand-image {
   width: 100%;
-  height: auto;
-  opacity: 0.8; /* Transparencia base */
-  filter: drop-shadow(0 0 8px rgba(11, 92, 255, 0.6)); /* Brillo sutil azul */
-  animation: ghostSwipeUp 2.2s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  height: 100%;
+  animation: ghostSwipeUp 2.4s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
   transform-origin: bottom center;
 }
 
-/* El brillo de fondo "fantasma" */
+/* El aura o "plasma" detrás de la mano */
 .ghost-glow {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(11, 92, 255, 0.25) 0%, rgba(4, 12, 30, 0) 70%);
+  transform: translate(-50%, -40%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(0, 212, 106, 0.2) 0%, rgba(11, 92, 255, 0.15) 40%, rgba(0,0,0,0) 70%);
   border-radius: 50%;
-  filter: blur(10px);
-  animation: ghostPulse 2.2s infinite;
+  filter: blur(12px);
+  animation: ghostPulse 2.4s infinite;
+  z-index: -1;
 }
 
-/* Texto premium estilizado */
+/* Texto estilo cine/premium */
 .premium-text {
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Montserrat', sans-serif; /* O la fuente premium que uses */
-  font-weight: 300;
-  font-size: 13px;
-  letter-spacing: 2px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.6) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-  animation: textFade 2.2s infinite;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
+  animation: textFade 2.4s infinite;
 }
 
 /* --- ANIMACIONES --- */
-
-/* Movimiento de la mano con estela fantasma */
 @keyframes ghostSwipeUp {
-  0% {
-    transform: translateY(60px) scale(0.8);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.9;
-    transform: translateY(40px) scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    filter: drop-shadow(0 0 15px rgba(11, 92, 255, 0.8)); /* Brillo máximo en medio */
-  }
-  80% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.9);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.9);
-  }
+  0% { transform: translateY(35px) scale(0.85); opacity: 0; }
+  25% { opacity: 1; transform: translateY(15px) scale(1); }
+  60% { opacity: 0.8; filter: drop-shadow(0 0 10px rgba(0, 212, 106, 0.5)); }
+  85% { opacity: 0; transform: translateY(-15px) scale(0.9); }
+  100% { opacity: 0; transform: translateY(-15px); }
 }
 
-/* Pulsación del brillo de fondo */
 @keyframes ghostPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.5; }
+  0%, 100% { transform: translate(-50%, -40%) scale(0.8); opacity: 0.3; }
+  50% { transform: translate(-50%, -40%) scale(1.4); opacity: 0.8; }
 }
 
-/* Desvanecimiento rítmico del texto */
 @keyframes textFade {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); }
 }
     
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
@@ -1450,10 +1430,32 @@ body.search-has-text #raffles{ display:none !important; }
 
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
     <div class="ghost-hand-container">
-      <img src="https://i.ibb.co/vzB6yRj/ghost-hand-swipe.png" alt="Desliza" class="ghost-hand-image">
+      
+      <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ghostGrad" x1="50%" y1="100%" x2="50%" y2="0%">
+            <stop offset="0%" stop-color="rgba(11, 92, 255, 0.1)" />
+            <stop offset="40%" stop-color="rgba(0, 212, 106, 0.7)" />
+            <stop offset="100%" stop-color="rgba(255, 255, 255, 1)" />
+          </linearGradient>
+          <filter id="neonGlow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <path d="M35 25 L50 10 L65 25" stroke="rgba(255,255,255,0.7)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)" />
+        <path d="M42 35 L50 27 L58 35" stroke="rgba(0,212,106,0.4)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        
+        <path d="M62 50V43a4.5 4.5 0 0 0-9 0v-20a4.5 4.5 0 0 0-9 0v31l-3.5-3a4.5 4.5 0 0 0-6.5 1l-2 3c-1.5 2.5-1 6 1.5 8l7 6A12 12 0 0 0 46 80h5a12 12 0 0 0 12-12v-13z" fill="url(#ghostGrad)" filter="url(#neonGlow)"/>
+      </svg>
+
       <div class="ghost-glow"></div>
     </div>
-    <span class="premium-text">Desliza para ver todas las rifas</span>
+    <span class="premium-text">Desliza para ver más</span>
   </div>
 
 
