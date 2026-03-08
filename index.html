@@ -1591,27 +1591,31 @@ async function fetchBranches(){
   try{
     const txt = await fetchCsvBySheetRange(SUCURSALES_SHEET_NAME, SUCURSALES_RANGE, 5000);
     const rows = parseCSV(txt);
-    if(!rows || rows.length < 1) return [];
+    if(!rows || rows.length <= 1) return [];
+
     const out = [];
-    for(let i=0;i<rows.length;i++){
+    for(let i=1;i<rows.length;i++){
       const row = rows[i] || [];
       const name = String(row[0] || '').trim();
       const detail = String(row[1] || '').trim();
       const image = String(row[3] || '').trim();
       const rawSheetId = String(row[2] || '').trim();
+
       if(!name && !detail && !image && !rawSheetId) continue;
-      const sheetId = i === 0 ? BASE_KEY : sanitizeSheetId(rawSheetId);
-      if(!name || !sheetId) continue;
+
+      const branchIndex = out.length;
+      const sheetId = branchIndex === 0 ? '' : sanitizeSheetId(rawSheetId);
+
       out.push({
-        index:i,
+        idx: branchIndex,
         name,
         detail,
         image,
-        sheetId,
-        isBase:i===0
+        sheetId
       });
     }
-    return out;
+
+    return out.filter(b => b.name || b.detail || b.image || b.sheetId);
   }catch(_){
     return [];
   }
