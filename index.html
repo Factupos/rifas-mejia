@@ -1311,15 +1311,99 @@ body.search-has-text #raffles{ display:none !important; }
 
 .ghost-arrows{
   position: absolute;
-  left: 0;
-  top: 28px;
-  width: 38px;
-  height: 118px;
-  opacity: .9;
+  left: 2px;
+  top: 18px;
+  width: 44px;
+  height: 142px;
+  pointer-events: none;
+  overflow: hidden;
   filter:
-    drop-shadow(0 0 8px rgba(255,255,255,.22))
-    drop-shadow(0 0 20px rgba(255,255,255,.10));
-  animation: ghostArrowBreath 1.8s linear infinite;
+    drop-shadow(0 0 8px rgba(255,255,255,.10))
+    drop-shadow(0 0 16px rgba(255,255,255,.08));
+}
+
+.ghost-arrow{
+  position: absolute;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateX(-50%);
+  opacity: 0;
+  filter: blur(.7px);
+  will-change: transform, opacity;
+}
+
+.ghost-arrow::before,
+.ghost-arrow::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0),
+    rgba(255,255,255,.88),
+    rgba(255,255,255,0)
+  );
+  box-shadow:
+    0 0 6px rgba(255,255,255,.22),
+    0 0 12px rgba(255,255,255,.10);
+  transform-origin: center;
+}
+
+.ghost-arrow::before{
+  left: 1px;
+  transform: rotate(42deg);
+}
+
+.ghost-arrow::after{
+  right: 1px;
+  transform: rotate(-42deg);
+}
+
+.ghost-arrow.a1{ animation: arrowFlowBand 1.9s linear infinite; animation-delay: 0s; }
+.ghost-arrow.a2{ animation: arrowFlowBand 1.9s linear infinite; animation-delay: .45s; }
+.ghost-arrow.a3{ animation: arrowFlowBand 1.9s linear infinite; animation-delay: .9s; }
+.ghost-arrow.a4{ animation: arrowFlowBand 1.9s linear infinite; animation-delay: 1.35s; }
+
+@keyframes arrowFlowBand{
+  0%{
+    transform: translateX(-50%) translateY(-18px) scale(.78);
+    opacity: 0;
+    filter: blur(2.2px);
+  }
+  12%{
+    opacity: .10;
+    filter: blur(1.8px);
+  }
+  28%{
+    opacity: .34;
+    filter: blur(1.2px);
+  }
+  46%{
+    opacity: .82;
+    filter: blur(.6px);
+  }
+  58%{
+    transform: translateX(-50%) translateY(38px) scale(1.02);
+    opacity: .95;
+    filter: blur(.4px);
+  }
+  72%{
+    opacity: .62;
+    filter: blur(.9px);
+  }
+  88%{
+    opacity: .16;
+    filter: blur(1.6px);
+  }
+  100%{
+    transform: translateX(-50%) translateY(104px) scale(.84);
+    opacity: 0;
+    filter: blur(2.4px);
+  }
 }
 
 .ghost-hand-wrap{
@@ -1573,11 +1657,12 @@ body.search-has-text #raffles{ display:none !important; }
 
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
   <div class="ghost-hand-container">
-    <svg class="ghost-arrows" viewBox="0 0 44 128" fill="none">
-      <path d="M22 8 L33 23 L11 23 Z" fill="rgba(255,255,255,.92)"/>
-      <path d="M22 38 L33 53 L11 53 Z" fill="rgba(255,255,255,.58)"/>
-      <path d="M22 68 L33 83 L11 83 Z" fill="rgba(255,255,255,.28)"/>
-    </svg>
+   <div class="ghost-arrows" aria-hidden="true">
+  <span class="ghost-arrow a1"></span>
+  <span class="ghost-arrow a2"></span>
+  <span class="ghost-arrow a3"></span>
+  <span class="ghost-arrow a4"></span>
+</div>
 
     <div class="ghost-glow"></div>
     <div class="ghost-finger-trail"></div>
