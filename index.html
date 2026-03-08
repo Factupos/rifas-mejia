@@ -1278,21 +1278,16 @@ body.search-has-text #raffles{ display:none !important; }
 
   </div>
 
-  <div id="branchShell" class="branch-shell" aria-live="polite">
+ <div id="branchShell" class="branch-shell" aria-live="polite">
     <div class="branch-inner">
       <div class="branch-topbar">
         <div class="branch-brand">
-          <div class="mini-logo"><img id="branchMainLogo" src="" alt="Logo principal" referrerpolicy="no-referrer"></div>
-          <div>
-            <p class="branch-overline">Panel principal</p>
-            <h2 id="branchMainTitle" class="branch-main-title">Elige tu rifa</h2>
-            <p id="branchMainSub" class="branch-main-sub">Selecciona la sucursal disponible para ingresar.</p>
-          </div>
+          <div class="mini-logo"><img id="branchMainLogo" src="" alt="Logo de la empresa" referrerpolicy="no-referrer"></div>
+          <h2 id="branchMainTitle" class="branch-main-title">Rifas</h2>
         </div>
-        <div id="branchBadge" class="branch-badge">Sucursales</div>
       </div>
       <div id="branchGrid" class="branch-grid"></div>
-      <div id="branchToast" class="branch-toast">Toca una sucursal para continuar.</div>
+      <div id="branchToast" class="branch-toast">Toca la imagen para ingresar</div>
     </div>
   </div>
 
@@ -1775,45 +1770,36 @@ function openBranch(branch){
 function renderBranchSelector(branches){
   BRANCHES = Array.isArray(branches) ? branches.slice() : [];
   if(!BRANCHES.length) return false;
+  
   BRANCH_MODE = true;
   document.body.classList.add('branch-mode');
+  
   const shell = document.getElementById('branchShell');
   const grid = document.getElementById('branchGrid');
-  const toast = document.getElementById('branchToast');
   const title = document.getElementById('branchMainTitle');
-  const sub = document.getElementById('branchMainSub');
-  const badge = document.getElementById('branchBadge');
   const logo = document.getElementById('branchMainLogo');
+
+  // Actualiza el Logo Superior
   if(logo) logo.src = window.__CONFIG_LOGO || document.getElementById('logoImg')?.src || '';
-  if(title) title.textContent = BRANCHES.length === 1 ? 'Toca para ingresar' : 'Elige la rifa de tu interés';
-  if(sub) sub.textContent = BRANCHES.length === 1
-    ? 'Accede a la sucursal disponible con un toque y continúa con el flujo actual.'
-    : 'Selecciona la sucursal que deseas abrir. Todo se adapta automáticamente al tamaño de tu pantalla.';
-  if(badge) badge.textContent = BRANCHES.length === 1 ? '1 sucursal' : `${BRANCHES.length} sucursales`;
-  if(toast) toast.textContent = BRANCHES.length === 1
-    ? 'Toca la tarjeta principal para ingresar a la rifa.'
-    : 'Toca una sucursal para entrar y cargar sus boletas en segundos.';
+  
+  // Asigna el nombre de la empresa como título principal con muchísima presencia
+  if(title) title.textContent = window.__CONFIG_NAME || 'RIFAS';
+
   if(grid){
     grid.className = 'branch-grid' + (BRANCHES.length === 1 ? ' one' : '');
+    
+    // Tarjetas súper optimizadas (Solo detalle + imagen maximizada)
     grid.innerHTML = BRANCHES.map((branch, idx)=>{
       const visual = getBranchVisual(branch);
-      const meta = branch.isBase ? 'Principal' : `Sucursal ${idx + 1}`;
       return `
-        <button class="branch-card${BRANCHES.length===1?' single':''}" type="button" data-branch-index="${idx}" aria-label="Abrir ${escapeHtml(branch.name)}">
-          <div class="branch-card-head">
-            <h3 class="branch-card-name">${escapeHtml(branch.name)}</h3>
-            <div class="branch-card-meta">${escapeHtml(meta)}</div>
-          </div>
-          <p class="branch-card-detail">${escapeHtml(branch.detail || 'Toca para acceder a esta sucursal.')}</p>
+        <button class="branch-card${BRANCHES.length===1?' single':''}" type="button" data-branch-index="${idx}" aria-label="Abrir sucursal">
+          <p class="branch-card-detail">${escapeHtml(branch.detail || 'Toca para acceder')}</p>
           <div class="branch-thumb">
-            ${visual ? `<img src="${escapeHtml(visual)}" alt="${escapeHtml(branch.name)}" referrerpolicy="no-referrer">` : `<div class="branch-thumb-fallback">🎟️</div>`}
-          </div>
-          <div class="branch-card-cta">
-            <strong>${BRANCHES.length===1 ? 'Ingresar ahora' : 'Abrir sucursal'}</strong>
-            <span>→</span>
+            ${visual ? `<img src="${escapeHtml(visual)}" alt="Sucursal" referrerpolicy="no-referrer">` : `<div class="branch-thumb-fallback">🎟️</div>`}
           </div>
         </button>`;
     }).join('');
+    
     grid.querySelectorAll('.branch-card').forEach(el=>{
       el.addEventListener('click', ()=>{
         const idx = Number(el.getAttribute('data-branch-index'));
@@ -1824,6 +1810,7 @@ function renderBranchSelector(branches){
       }, {passive:true});
     });
   }
+  
   if(shell) shell.classList.add('show');
   hideBranchEnterOverlay();
   setBranchBackVisibility();
