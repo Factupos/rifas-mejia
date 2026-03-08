@@ -1329,7 +1329,7 @@ body.search-has-text #raffles{ display:none !important; }
   width: 150px;
   height: 210px;
   transform-origin: 55% 88%;
-  animation: humanGhostSwipe 2.55s linear infinite;
+  animation: humanGhostSwipe 2.9s linear infinite;
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(0,0,0,1) 0%,
@@ -1374,7 +1374,7 @@ body.search-has-text #raffles{ display:none !important; }
     radial-gradient(circle at 52% 75%, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 72%);
   filter: blur(16px);
   opacity: .55;
-  animation: ghostAuraMove 2.55s linear infinite;
+  animation: ghostAuraMove 2.9s linear infinite;
 }
 
 .ghost-finger-trail{
@@ -1395,24 +1395,24 @@ body.search-has-text #raffles{ display:none !important; }
     );
   filter: blur(3px);
   opacity: 0;
-  animation: fingerTrailMove 2.55s linear infinite;
+  animation: fingerTrailMove 2.9s linear infinite;
 }
 
 @keyframes humanGhostSwipe{
   0%{
-    transform: translateY(18px) scale(.985) rotate(-5.6deg);
+    transform: translateY(26px) scale(.985) rotate(-5.6deg);
     opacity: .18;
   }
   12%{
-    transform: translateY(12px) scale(.992) rotate(-5.2deg);
+    transform: translateY(18px) scale(.992) rotate(-5.2deg);
     opacity: .48;
   }
   28%{
-    transform: translateY(2px) scale(1) rotate(-4.7deg);
+    transform: translateY(6px) scale(1) rotate(-4.7deg);
     opacity: .82;
   }
   46%{
-    transform: translateY(-10px) scale(1.01) rotate(-4.3deg);
+    transform: translateY(-8px) scale(1.01) rotate(-4.3deg);
     opacity: .98;
   }
   64%{
@@ -1420,11 +1420,11 @@ body.search-has-text #raffles{ display:none !important; }
     opacity: .88;
   }
   82%{
-    transform: translateY(-28px) scale(.996) rotate(-5.3deg);
+    transform: translateY(-30px) scale(.996) rotate(-5.3deg);
     opacity: .52;
   }
   100%{
-    transform: translateY(-34px) scale(.988) rotate(-5.8deg);
+    transform: translateY(-38px) scale(.988) rotate(-5.8deg);
     opacity: .16;
   }
 }
