@@ -1282,17 +1282,17 @@ body.search-has-text #raffles{ display:none !important; }
    ========================================================= */
 .branch-scroll-indicator.premium-ghost {
   position: fixed;
-  bottom: 20px; /* Inicia bien abajo */
+  bottom: 10px; /* Al ras de la pantalla para el máximo recorrido */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: none; /* Intocable, no estorba */
+  pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.6s;
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s;
 }
 
 .branch-scroll-indicator.premium-ghost.show {
@@ -1302,8 +1302,8 @@ body.search-has-text #raffles{ display:none !important; }
 
 .ghost-hand-container {
   position: relative;
-  width: 80px;  /* Tamaño exacto para que la mano se aprecie perfectamente */
-  height: 140px; /* Espacio vertical para que haga el recorrido */
+  width: 90px;   /* Extra ancho para apreciar la morfología humana */
+  height: 160px; /* Alto extremo para un recorrido de swipe majestuoso */
   display: flex;
   justify-content: center;
 }
@@ -1311,53 +1311,54 @@ body.search-has-text #raffles{ display:none !important; }
 .ghost-hand-image {
   width: 100%;
   height: 100%;
-  /* Animación súper fluida y prolongada */
-  animation: swipeMaster 3s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* Animación súper extendida (4 segundos) */
+  animation: swipeOrganic 4s infinite cubic-bezier(0.3, 0.05, 0.2, 1);
   transform-origin: bottom center;
 }
 
-/* Foco de luz ambiental que sigue a la mano */
+/* Foco de luz ambiental que viaja con la mano */
 .ghost-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -30%);
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(0, 212, 106, 0.45) 0%, rgba(11, 92, 255, 0.2) 50%, rgba(0,0,0,0) 80%);
+  width: 85px;
+  height: 85px;
+  background: radial-gradient(circle, rgba(0, 212, 106, 0.35) 0%, rgba(11, 92, 255, 0.15) 50%, rgba(0,0,0,0) 80%);
   border-radius: 50%;
-  filter: blur(14px);
-  animation: glowMaster 3s infinite;
+  filter: blur(16px);
+  animation: glowOrganic 4s infinite;
   z-index: -1;
 }
 
-/* --- ANIMACIONES MAGISTRALES --- */
-@keyframes swipeMaster {
+/* --- ANIMACIONES DE ALTO REALISMO --- */
+@keyframes swipeOrganic {
   0% { 
-    transform: translateY(70px) scale(0.9); /* Oculto abajo */
+    transform: translateY(110px) scale(0.85); /* Inicia oculto, bien abajo */
     opacity: 0; 
   }
   15% { 
     opacity: 1; 
-    transform: translateY(30px) scale(1); /* Sube y se ilumina rápidamente */
+    transform: translateY(40px) scale(1.05); /* Alcanza tamaño completo rápido */
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
   }
   65% { 
-    opacity: 0.95; 
-    transform: translateY(-20px) scale(0.95); /* Recorrido largo y lento hacia arriba */
+    opacity: 0.9; 
+    transform: translateY(-25px) scale(0.95); /* Deslizamiento largo y sereno */
   }
   85% { 
     opacity: 0; 
-    transform: translateY(-45px) scale(0.85); /* Se desvanece antes de llegar arriba */
+    transform: translateY(-50px) scale(0.8); /* Se desvanece antes de detenerse */
   }
   100% { 
     opacity: 0; 
-    transform: translateY(-45px); 
+    transform: translateY(-50px); 
   }
 }
 
-@keyframes glowMaster {
-  0%, 100% { transform: translate(-50%, -10%) scale(0.7); opacity: 0; }
-  40% { transform: translate(-50%, -40%) scale(1.3); opacity: 1; }
+@keyframes glowOrganic {
+  0%, 100% { transform: translate(-50%, 0%) scale(0.7); opacity: 0; }
+  30% { transform: translate(-50%, -30%) scale(1.4); opacity: 1; }
   85% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
 }
     
@@ -1426,21 +1427,27 @@ body.search-has-text #raffles{ display:none !important; }
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
     <div class="ghost-hand-container">
       
-      <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="ghost-hand-image" viewBox="15 10 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="superNeonGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <linearGradient id="organicGrad" x1="50%" y1="100%" x2="50%" y2="0%">
+            <stop offset="0%" stop-color="rgba(11, 92, 255, 0.1)" />
+            <stop offset="40%" stop-color="rgba(0, 212, 106, 0.8)" />
+            <stop offset="85%" stop-color="rgba(255, 255, 255, 1)" />
+          </linearGradient>
+          
+          <filter id="premiumNeon" x="-30%" y="-30%" width="160%" height="160%">
             <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="0.9"/>
-            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00D46A" flood-opacity="0.9"/>
-            <feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#0B5CFF" flood-opacity="0.6"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00D46A" flood-opacity="0.8"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#0B5CFF" flood-opacity="0.5"/>
           </filter>
         </defs>
         
-        <path d="M48,45 V20 c0-3.3-2.7-6-6-6 s-6,2.7-6,6 v25.5 c-1.5-1.4-3.5-3.5-5.5-5 c-2.4-1.8-5.8-1.5-7.9,0.7 c-2.1,2.2-2,5.7,0.3,7.8 l14.8,14 c3.9,3.7,6,8.8,6,14 h22 c0-5.3,1.6-10.4,4.5-14.7 c2.4-3.5,3.9-7.7,3.9-12.3 V43 c0-3.3-2.7-6-6-6 c-1,0-1.9,0.3-2.7,0.7 c-0.6-2.5-2.8-4.4-5.5-4.4 c-1.2,0-2.3,0.4-3.3,1 c-0.8-2.3-3-4-5.5-4 C49.8,30.3,48.5,30.8,48,31.7 Z" 
-              stroke="#ffffff" 
-              stroke-width="2.5" 
+        <path d="M44.6,90.4 c-4.2-11.4-8.8-19.1-14.7-25.5 c-3.5-3.8-6.6-7.8-6.6-13.6 c0-4.6,3.4-7.5,7.1-7.5 c3.6,0,6.5,2.7,8.3,7 c1.2,2.8,2.3,6.2,2.6,9.1 V22.8 c0-4.8,3.9-8.8,8.8-8.8 c4.8,0,8.8,3.9,8.8,8.8 v26.6 c2.7-2.6,6.2-3.8,9.6-2.5 c2.4,1,4.4,3,5.3,5.4 c2.6-1.5,5.8-1.5,8.4,0.1 c2,1.2,3.6,3.3,4.1,5.6 c2.1-0.5,4.5,0.1,6.1,1.7 c2.4,2.4,2.9,6.1,1.4,9.1 c-2.6,5.3-5,10.7-6.9,16.2 c-1.5,4.3-3.6,12.7-3.6,12.7 H44.6 z" 
+              stroke="url(#organicGrad)" 
+              stroke-width="2.2" 
               stroke-linecap="round" 
               stroke-linejoin="round" 
-              filter="url(#superNeonGlow)"/>
+              filter="url(#premiumNeon)"/>
       </svg>
 
       <div class="ghost-glow"></div>
