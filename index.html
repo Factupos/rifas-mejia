@@ -1276,6 +1276,7 @@ const BASE_KEY = '1FMVI9US7MolgCRlKPsKGYF7ducTSTbrIDmP6htgwWG8';
 const URL_QS = new URLSearchParams(location.search);
 const SELECTED_BRANCH_KEY = (URL_QS.get('ssid') || '').trim();
 const BRANCH_OPEN_MODE = (URL_QS.get('branchopen') || '').trim() === '1';
+const BRANCH_OPEN_BID = (URL_QS.get('bid') || '').trim();
 const KEY = SELECTED_BRANCH_KEY || BASE_KEY;
 const GID_RAFFLES = '1661661343';   // A: Número, B: Libre/Asignado
 const GID_CONFIG  = '1977832725';    // Config_Publica
@@ -1585,7 +1586,6 @@ function buildPanelUrl(sheetId, opts={}){
   return url.toString();
 }
 function goToBranchPanel(){
-  try{ sessionStorage.removeItem('raffle_branch_target_v1'); }catch(_){ }
   const url = buildPanelUrl('');
   location.href = url;
 }
@@ -1626,7 +1626,8 @@ async function fetchBranches(){
 function setBranchBackVisibility(){
   const btn = document.getElementById('branchBackBtn');
   if(!btn) return;
-  if(BRANCHES.length > 0 && !!SELECTED_BRANCH_KEY) btn.classList.add('show');
+  const hasBranchOpenContext = (!!sanitizeSheetId(SELECTED_BRANCH_KEY)) || (BRANCH_OPEN_MODE && BRANCH_OPEN_BID === 'base');
+  if(BRANCHES.length > 0 && hasBranchOpenContext) btn.classList.add('show');
   else btn.classList.remove('show');
 }
 function wireBranchBackButton(){
@@ -1662,13 +1663,6 @@ function openBranch(branch){
   BRANCH_SELECTION_LOCK = true;
   const safeSheetId = sanitizeSheetId(branch.sheetId) || BASE_KEY;
   const branchBid = branch.isBase ? 'base' : String(branch.index ?? '');
-  try{
-    sessionStorage.setItem('raffle_branch_target_v1', JSON.stringify({
-      sheetId: safeSheetId,
-      bid: branchBid,
-      at: Date.now()
-    }));
-  }catch(_){ }
 
   // Una sola carga: eliminamos la pantalla intermedia de entrada
   // y dejamos únicamente el boot real de la página destino.
@@ -1745,20 +1739,12 @@ async function maybeStartBranchSelector(){
   const branches = await fetchBranches();
   BRANCHES = branches;
 
-  let storedTarget = null;
-  try{
-    const raw = sessionStorage.getItem('raffle_branch_target_v1');
-    if(raw){
-      const parsed = JSON.parse(raw);
-      if(parsed && parsed.at && (Date.now() - parsed.at) < 5 * 60 * 1000){
-        storedTarget = parsed;
-      }else{
-        sessionStorage.removeItem('raffle_branch_target_v1');
-      }
-    }
-  }catch(_){ }
+  const hasBaseBranch = branches.some(b => b && b.isBase);
+  const hasSelectedSheet = !!sanitizeSheetId(SELECTED_BRANCH_KEY);
+  const openingBaseBranch = BRANCH_OPEN_MODE && BRANCH_OPEN_BID === 'base' && !hasSelectedSheet && hasBaseBranch;
+  const openingExternalBranch = BRANCH_OPEN_MODE && hasSelectedSheet;
+  const shouldSkipSelector = openingBaseBranch || openingExternalBranch;
 
-  const shouldSkipSelector = !!SELECTED_BRANCH_KEY || !!BRANCH_OPEN_MODE || !!storedTarget;
   if(shouldSkipSelector){
     setBranchBackVisibility();
     return false;
@@ -2556,7 +2542,6 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   if(branchSelectorShown){
     return;
   }
-  try{ sessionStorage.removeItem('raffle_branch_target_v1'); }catch(_){ }
 
   // ✅ Chequeo bloqueo lo primero (ya con datos básicos)
   bootSet(28, 'Verificando habilitación…', 'Leyendo Configuracion!X2');
