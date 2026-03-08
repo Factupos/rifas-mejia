@@ -1146,75 +1146,39 @@ body.search-has-text #raffles{ display:none !important; }
 }
 
 /* Detalles: Más compactos para robar menos espacio */
+/* =========================================================
+   DETALLES: Estático, Luminoso y Ultra Premium (Blanco Azulado)
+   ========================================================= */
 .branch-card-detail {
-  position: relative; /* Esencial para que la luz viva dentro y fuera de él */
-  margin: 0 0 8px 0; /* Un pequeño respiro antes de la imagen */
-  padding: 14px 16px;
+  margin: 0 0 10px 0; 
+  padding: 14px 18px;
   
-  /* 1. LA BASE: Cristal oscuro muy pulido */
-  background: rgba(4, 12, 30, 0.65); 
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  /* Fondo luminoso: Blanco puro que degrada a un azul hielo muy sutil */
+  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
   
-  /* Borde con luz cenital (más claro arriba, oscuro abajo) */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 18px;
+  /* Bordes tridimensionales para aspecto de placa premium */
+  border: 1px solid #ffffff;
+  border-bottom: 2px solid #bae6fd;
+  border-radius: 20px;
   
-  /* Tipografía nítida e imponente */
+  /* Texto oscuro (Azul noche/Casi negro) para legibilidad extrema */
+  color: #031024; 
   font-size: clamp(14px, 4vw, 17px); 
-  line-height: 1.4; 
+  line-height: 1.35; 
   font-weight: 900; 
-  color: #ffffff; 
   text-align: center;
+  letter-spacing: 0.2px;
   
-  /* Sombra doble: ancla la letra y le da un resplandor azul/cyan eléctrico */
-  text-shadow: 0 3px 8px rgba(0,0,0,0.9), 0 0 18px rgba(11, 92, 255, 0.8);
-  letter-spacing: 0.3px; 
-  
-  /* Protecciones estructurales */
+  /* MAGIA ESTÁTICA: Resplandor interior y exterior */
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.5), /* Sombra negra profunda para que "flote" */
+    0 0 30px rgba(11, 92, 255, 0.4), /* Aura azulada estática proyectada hacia afuera */
+    inset 0 -5px 15px rgba(11, 92, 255, 0.15), /* Resplandor artificial interior */
+    inset 0 4px 10px rgba(255, 255, 255, 0.8); /* Reflejo de luz superior */
+    
   flex: 0 0 auto; 
   word-break: break-word; 
   overflow-wrap: break-word;
-  isolation: isolate; /* Crea un micro-universo para sus propios brillos */
-}
-
-/* 2. EL AURA: Luz que "respira" detrás del cristal */
-.branch-card-detail::before {
-  content: "";
-  position: absolute;
-  inset: -1px; /* Abraza la caja por fuera */
-  border-radius: 19px;
-  z-index: -1; /* Se esconde detrás de la base oscura */
-  background: linear-gradient(135deg, #00D46A, #0B5CFF, #FFC400);
-  opacity: 0.25;
-  filter: blur(8px);
-  animation: detailAura 3s ease-in-out infinite alternate;
-}
-
-/* 3. EL SHIMMER: Un reflejo de luz que recorre el texto elegantemente */
-.branch-card-detail::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  /* Un rayo de luz blanco diagonal muy sutil */
-  background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
-  background-size: 200% 100%;
-  animation: detailShimmer 4s infinite linear;
-  z-index: 1; /* Pasa por encima del cristal pero por debajo de las letras */
-  pointer-events: none; /* Evita que bloquee los toques */
-}
-
-/* --- Animaciones de Vida --- */
-@keyframes detailAura {
-  0% { opacity: 0.15; filter: blur(6px); transform: scale(0.99); }
-  100% { opacity: 0.45; filter: blur(12px); transform: scale(1.02); }
-}
-
-@keyframes detailShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
 }
 
 /* Contenedor de Imagen: Fluye naturalmente con el tamaño de la imagen */
