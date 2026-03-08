@@ -1280,10 +1280,10 @@ body.search-has-text #raffles{ display:none !important; }
 /* =========================================================
    INDICADOR DE SCROLL PREMIUM: EFECTO FANTASMA VECTORIAL
    ========================================================= */
-.branch-scroll-indicator.premium-ghost {
+.branch-scroll-indicator.premium-ghost{
   position: fixed;
-  bottom: 25px; 
-  left: 20%; /* AQUÍ: Movido más hacia la izquierda */
+  bottom: 26px;
+  left: 16%;
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
@@ -1292,99 +1292,107 @@ body.search-has-text #raffles{ display:none !important; }
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.6s;
+  transition: opacity .55s cubic-bezier(.23,1,.32,1), visibility .55s;
 }
 
-.branch-scroll-indicator.premium-ghost.show {
+.branch-scroll-indicator.premium-ghost.show{
   opacity: 1;
   visibility: visible;
 }
 
-/* Contenedor ampliado para dar espacio a la majestuosidad del efecto */
-/* El contenedor general lo volvemos un poco más angosto */
-.ghost-hand-container {
+.ghost-hand-container{
   position: relative;
-  width: 130px;  
-  height: 200px; 
+  width: 148px;
+  height: 210px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.ghost-arrows {
+.ghost-arrows{
   position: absolute;
-  left: 0; 
-  width: 50px; 
-  height: 100%;
-  opacity: 0.9;
-  animation: pulseArrows 2.5s infinite alternate ease-in-out;
+  left: 4px;
+  width: 34px;
+  height: 120px;
+  opacity: .72;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.18));
+  animation: premiumArrowFloat 2.3s ease-in-out infinite;
 }
 
-/* AQUÍ MOVEMOS SOLO LA MANO */
-.ghost-hand-image {
+.ghost-hand-svg{
   position: absolute;
-  left: 35px; /* <--- Controla qué tan pegada está a las flechas (antes estaba en right: 0) */
-  width: 130px; 
+  left: 28px;
+  width: 132px;
+  height: 148px;
+  transform-origin: 58% 88%;
+  filter:
+    drop-shadow(0 16px 24px rgba(0,0,0,.22))
+    drop-shadow(0 0 18px rgba(255,230,220,.18));
+  animation: premiumHandSwipe 3s cubic-bezier(.42,0,.2,1) infinite;
+}
+
+.ghost-hand-glow{
+  position: absolute;
+  left: 64px;
+  top: 38px;
+  width: 92px;
   height: 130px;
-  transform-origin: center bottom;
-  animation: verticalSwipePremium 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* LA MAGIA DEL DIFUMINADO: Hace que la base de la muñeca desaparezca en degradado */
-  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 85%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 85%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.30), transparent 34%),
+    radial-gradient(circle at 50% 45%, rgba(255,209,196,.34), transparent 56%),
+    radial-gradient(circle at 50% 75%, rgba(11,92,255,.18), transparent 72%);
+  filter: blur(16px);
+  animation: premiumGlowPulse 3s cubic-bezier(.42,0,.2,1) infinite;
 }
 
-.ghost-glow {
-  position: absolute;
-  top: 50%;
-  left: 55px; /* Movemos el brillo para que siga el nuevo centro de la mano */
-  transform: translateX(-50%);
-  width: 130px;
-  height: 130px;
-  background: radial-gradient(circle, rgba(11, 92, 255, 0.4) 0%, rgba(0, 212, 106, 0.2) 40%, rgba(0,0,0,0) 75%);
-  border-radius: 50%;
-  filter: blur(20px);
-  animation: gloriousGlowVertical 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: -1;
-}
-/* --- ANIMACIONES ESTRICTAMENTE VERTICALES Y FLUIDAS --- */
-
-/* Movimiento 100% vertical, eliminando rotaciones para un trazo limpio */
-@keyframes verticalSwipePremium {
-  0% { 
-    transform: translateY(80px) scale(0.9); 
-    opacity: 0; 
+@keyframes premiumHandSwipe{
+  0%,100%{
+    transform: translateY(0) scale(1) rotate(-7deg);
+    opacity: .94;
   }
-  20% { 
-    transform: translateY(40px) scale(1.02); /* Se acerca sutilmente a la pantalla (Scale) */
-    opacity: 1; 
+  18%{
+    transform: translateY(-8px) scale(1.02) rotate(-5deg);
+    opacity: 1;
   }
-  65% { 
-    transform: translateY(-40px) scale(1); /* Recorrido largo, constante y fluido */
-    opacity: 1; 
+  42%{
+    transform: translateY(18px) scale(.985) rotate(-8deg);
+    opacity: .98;
   }
-  85% { 
-    transform: translateY(-80px) scale(0.9); /* Se aleja y desvanece con elegancia */
-    opacity: 0; 
+  58%{
+    transform: translateY(28px) scale(.975) rotate(-9deg);
+    opacity: .88;
   }
-  100% { 
-    transform: translateY(-80px) scale(0.9); /* Mantiene el estado invisible para que el loop no tenga cortes */
-    opacity: 0; 
+  76%{
+    transform: translateY(4px) scale(1) rotate(-7deg);
+    opacity: .95;
   }
 }
 
-/* El resplandor acompaña a la mano copiando sus mismos tiempos */
-@keyframes gloriousGlowVertical {
-  0% { transform: translate(-50%, 40px) scale(0.8); opacity: 0; }
-  20% { transform: translate(-50%, 20px) scale(1.2); opacity: 1; }
-  65% { transform: translate(-50%, -20px) scale(1); opacity: 1; }
-  85% { transform: translate(-50%, -40px) scale(0.8); opacity: 0; }
-  100% { transform: translate(-50%, -40px) scale(0.8); opacity: 0; }
+@keyframes premiumGlowPulse{
+  0%,100%{
+    transform: translateY(0) scale(.95);
+    opacity: .45;
+  }
+  32%{
+    transform: translateY(10px) scale(1.08);
+    opacity: .82;
+  }
+  60%{
+    transform: translateY(22px) scale(1.12);
+    opacity: .28;
+  }
 }
 
-/* Las flechas laten de forma independiente para mantener la atención */
-@keyframes pulseArrows {
-  0% { filter: drop-shadow(0 0 4px rgba(0, 212, 106, 0.4)); transform: scale(0.97); opacity: 0.6; }
-  100% { filter: drop-shadow(0 0 20px rgba(0, 212, 106, 1)); transform: scale(1.03); opacity: 1; }
+@keyframes premiumArrowFloat{
+  0%,100%{
+    transform: translateY(0);
+    opacity: .55;
+  }
+  50%{
+    transform: translateY(10px);
+    opacity: .95;
+  }
 }
     
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
@@ -1449,49 +1457,62 @@ body.search-has-text #raffles{ display:none !important; }
     </div>
   </div>
 
-<div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
+<div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost">
   <div class="ghost-hand-container">
-    
-    <svg class="ghost-arrows" viewBox="0 0 40 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="glowArrow" x="-50%" y="-50%" width="200%" height="200%">
-          <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.9"/>
-          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00D46A" flood-opacity="0.8"/>
-        </filter>
-      </defs>
-      <path d="M20,65 V15 M20,15 L8,28 M20,15 L32,28" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowArrow)"/>
-      <path d="M20,95 V145 M20,145 L8,132 M20,145 L32,132" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowArrow)"/>
+    <svg class="ghost-arrows" viewBox="0 0 40 120" aria-hidden="true">
+      <path d="M20 10 L30 24 L10 24 Z" fill="rgba(255,255,255,.85)"/>
+      <path d="M20 38 L30 52 L10 52 Z" fill="rgba(255,255,255,.55)"/>
+      <path d="M20 66 L30 80 L10 80 Z" fill="rgba(255,255,255,.30)"/>
     </svg>
 
-    <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="ghost-hand-glow"></div>
+
+    <svg class="ghost-hand-svg" viewBox="0 0 180 220" aria-hidden="true">
       <defs>
-        <filter id="superNeonGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="1"/>
-          <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#0B5CFF" flood-opacity="0.85"/>
-          <feDropShadow dx="0" dy="0" stdDeviation="16" flood-color="#00D46A" flood-opacity="0.5"/>
+        <linearGradient id="skinGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#fff6f1"/>
+          <stop offset="35%" stop-color="#f6d7cb"/>
+          <stop offset="72%" stop-color="#e7b8a8"/>
+          <stop offset="100%" stop-color="#d89d8d"/>
+        </linearGradient>
+
+        <linearGradient id="nailGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffe7ef"/>
+          <stop offset="100%" stop-color="#efbccb"/>
+        </linearGradient>
+
+        <filter id="softLux" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="rgba(0,0,0,.22)"/>
         </filter>
       </defs>
-      
-      <g transform="translate(10, 5) rotate(-35 50 50)">
-        <path d="M48,45 V18 c0-3.3-2.7-6-6-6 s-6,2.7-6,6 v25.5 c-1.5-1.4-3.5-3.5-5.5-5 c-2.4-1.8-5.8-1.5-7.9,0.7 c-2.1,2.2-2,5.7,0.3,7.8 l14.8,14 c3.9,3.7,6,8.8,6,14 h22 c0-5.3,1.6-10.4,4.5-14.7 c2.4-3.5,3.9-7.7,3.9-12.3 V43 c0-3.3-2.7-6-6-6 c-1,0-1.9,0.3-2.7,0.7 c-0.6-2.5-2.8-4.4-5.5-4.4 c-1.2,0-2.3,0.4-3.3,1 c-0.8-2.3-3-4-5.5-4 C49.8,30.3,48.5,30.8,48,31.7" 
-              stroke="#ffffff" 
-              stroke-width="3" 
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              filter="url(#superNeonGlow)"/>
-      </g>
+
+      <path filter="url(#softLux)"
+        d="M95 198
+           C84 185, 76 171, 72 158
+           C67 141, 67 117, 69 94
+           C70 80, 79 71, 90 72
+           C98 73, 103 79, 104 90
+           L104 39
+           C104 27, 113 18, 125 18
+           C136 18, 145 27, 145 39
+           L145 119
+           C145 128, 143 137, 138 146
+           C131 159, 123 172, 115 184
+           C109 193, 104 199, 95 198 Z"
+        fill="url(#skinGrad)"/>
+
+      <path d="M104 38
+               C104 26,113 18,125 18
+               C136 18,145 27,145 39
+               C145 49,138 56,125 56
+               C112 56,104 49,104 38 Z"
+            fill="url(#nailGrad)" opacity=".95"/>
+
+      <path d="M89 83 C96 74,108 70,121 73" stroke="rgba(255,255,255,.45)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M82 145 C92 155,108 158,121 151" stroke="rgba(170,96,76,.16)" stroke-width="5" stroke-linecap="round" fill="none"/>
     </svg>
-
-
-  <div id="branchEnterOverlay" class="branch-enter-overlay" aria-hidden="true">
-    <div class="branch-enter-card">
-      <div class="branch-enter-logo"><img id="branchEnterImg" src="" alt="Sucursal" referrerpolicy="no-referrer"></div>
-      <p class="branch-enter-kicker">Ingresando a</p>
-      <h3 id="branchEnterTitle" class="branch-enter-title">Sucursal</h3>
-      <p id="branchEnterDetail" class="branch-enter-detail">Preparando experiencia…</p>
-      <div class="branch-enter-progress"><i></i></div>
-    </div>
   </div>
+</div>
 
   <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">⌂</button>
 
