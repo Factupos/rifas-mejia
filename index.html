@@ -1283,7 +1283,7 @@ body.search-has-text #raffles{ display:none !important; }
 .branch-scroll-indicator.premium-ghost {
   position: fixed;
   bottom: 25px; 
-  left: 30%; /* AQUÍ se mueve hacia la izquierda (antes 50%) */
+  left: 20%; /* AQUÍ: Movido más hacia la izquierda */
   transform: translateX(-50%);
   z-index: 100000;
   display: flex;
@@ -1325,9 +1325,11 @@ body.search-has-text #raffles{ display:none !important; }
   width: 130px; 
   height: 130px;
   transform-origin: center bottom;
-  /* Utilizamos una curva de aceleración estándar de la industria (tipo Apple/Material) 
-     para que el movimiento empiece suave, tome velocidad y frene sutilmente */
   animation: verticalSwipePremium 3.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* LA MAGIA: Difumina la muñeca hacia abajo y oculta la línea de cierre */
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
+  mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
 }
 
 /* El resplandor sigue exactamente el mismo eje Y sin desviarse */
