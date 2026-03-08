@@ -1302,66 +1302,69 @@ body.search-has-text #raffles{ display:none !important; }
 
 .ghost-hand-container {
   position: relative;
-  width: 75px;   /* Tamaño perfecto, sutil pero claro */
-  height: 120px; 
+  width: 140px;  /* Aumentado para acomodar las flechas y la mano lado a lado */
+  height: 150px; /* Altura ideal para el recorrido del scroll */
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-end; /* Alineamos el contenido a la derecha */
 }
 
-.ghost-hand-image {
-  width: 100%;
+/* Las flechas se quedan fijas a la izquierda, indicando la dirección del eje */
+.ghost-arrows {
+  position: absolute;
+  left: 0;
+  width: 35px;
   height: 100%;
-  /* Animación que imita el gesto humano en diagonal */
-  animation: ergonomicSwipe 3.5s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: center center;
+  opacity: 0.85;
+  animation: pulseArrows 2.5s infinite alternate ease-in-out;
 }
 
-/* Foco de luz ambiental que acompaña el movimiento */
+/* La mano hace el recorrido vertical a lo largo de las flechas */
+.ghost-hand-image {
+  position: absolute;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  transform-origin: center;
+  animation: intuitiveSwipe 3.5s infinite cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* Foco de luz ambiental que sigue a la mano */
 .ghost-glow {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 60%;
   transform: translate(-50%, -30%);
-  width: 65px;
-  height: 65px;
-  background: radial-gradient(circle, rgba(0, 212, 106, 0.35) 0%, rgba(11, 92, 255, 0.15) 50%, rgba(0,0,0,0) 80%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(0, 212, 106, 0.35) 0%, rgba(11, 92, 255, 0.2) 50%, rgba(0,0,0,0) 80%);
   border-radius: 50%;
   filter: blur(14px);
-  animation: glowErgo 3.5s infinite;
+  animation: glowMaster 3.5s infinite;
   z-index: -1;
 }
 
-/* --- ANIMACIONES ERGONÓMICAS (ÁNGULO Y DIAGONAL) --- */
-@keyframes ergonomicSwipe {
-  0% { 
-    /* Inicia abajo y a la derecha, con inclinación natural */
-    transform: translate(20px, 80px) rotate(-15deg) scale(0.85); 
-    opacity: 0; 
-  }
-  15% { 
-    opacity: 1; 
-    transform: translate(10px, 35px) rotate(-18deg) scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
-  }
-  65% { 
-    opacity: 0.95; 
-    /* Sube hacia la izquierda (scroll natural del pulgar/índice) */
-    transform: translate(-15px, -30px) rotate(-22deg) scale(0.95); 
-  }
-  85% { 
-    opacity: 0; 
-    transform: translate(-25px, -60px) rotate(-25deg) scale(0.85); 
-  }
-  100% { 
-    opacity: 0; 
-    transform: translate(-25px, -60px) rotate(-25deg); 
-  }
+/* --- ANIMACIONES INTUITIVAS --- */
+
+/* Movimiento de la mano deslizando de abajo hacia arriba de forma realista */
+@keyframes intuitiveSwipe {
+  0% { transform: translateY(40px) scale(0.9); opacity: 0; }
+  15% { opacity: 1; transform: translateY(25px) scale(1); }
+  60% { transform: translateY(-30px) scale(1); opacity: 1; }
+  80% { opacity: 0; transform: translateY(-45px) scale(0.9); }
+  100% { opacity: 0; transform: translateY(-45px) scale(0.9); }
 }
 
-@keyframes glowErgo {
-  0%, 100% { transform: translate(-30%, 10%) scale(0.7); opacity: 0; }
-  30% { transform: translate(-50%, -30%) scale(1.4); opacity: 1; }
-  80% { transform: translate(-60%, -60%) scale(0.8); opacity: 0; }
+/* Las flechas laten suavemente invitando a la acción */
+@keyframes pulseArrows {
+  0% { filter: drop-shadow(0 0 2px rgba(0, 212, 106, 0.4)); transform: scale(0.98); }
+  100% { filter: drop-shadow(0 0 14px rgba(0, 212, 106, 0.9)); transform: scale(1.02); }
+}
+
+@keyframes glowMaster {
+  0%, 100% { transform: translate(-50%, 0px) scale(0.7); opacity: 0; }
+  40% { transform: translate(-50%, -20px) scale(1.3); opacity: 1; }
+  80% { transform: translate(-50%, -40px) scale(0.8); opacity: 0; }
 }
     
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
@@ -1427,33 +1430,39 @@ body.search-has-text #raffles{ display:none !important; }
   </div>
 
 <div id="branchScrollIndicator" class="branch-scroll-indicator premium-ghost" aria-hidden="true">
-    <div class="ghost-hand-container">
-      
-      <svg class="ghost-hand-image" viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ergoGrad" x1="50%" y1="100%" x2="50%" y2="0%">
-            <stop offset="0%" stop-color="rgba(11, 92, 255, 0.3)" />
-            <stop offset="40%" stop-color="rgba(0, 212, 106, 0.9)" />
-            <stop offset="100%" stop-color="rgba(255, 255, 255, 1)" />
-          </linearGradient>
-          
-          <filter id="ergoNeon" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="0" stdDeviation="0.5" flood-color="#ffffff" flood-opacity="1"/>
-            <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#00D46A" flood-opacity="0.8"/>
-            <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#0B5CFF" flood-opacity="0.5"/>
-          </filter>
-        </defs>
-        
-        <path d="M14 14.5 V 7 a 2 2 0 0 1 4 0 v 7.5" stroke="url(#ergoGrad)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#ergoNeon)"/>
-        
-        <path d="M18 15.5 v -2 a 2 2 0 0 1 4 0 v 2" stroke="url(#ergoGrad)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#ergoNeon)"/>
-        
-        <path d="M22 16.5 v -1 a 2 2 0 0 1 4 0 v 5 c 0 4 -2.5 7 -6.5 7 h -3.5 c -4 0 -7.5 -3.5 -9.5 -6.5 l -2.5 -3 c -1 -1.5 -0.5 -3.5 1 -4.5 c 1.5 -1 3.5 -0.5 5 1 L 14 16" stroke="url(#ergoGrad)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#ergoNeon)"/>
-      </svg>
+  <div class="ghost-hand-container">
+    
+    <svg class="ghost-arrows" viewBox="0 0 35 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glowArrow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00D46A" flood-opacity="0.8"/>
+        </filter>
+      </defs>
+      <path d="M17.5,60 V15 M17.5,15 L7.5,25 M17.5,15 L27.5,25" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowArrow)"/>
+      <path d="M17.5,80 V125 M17.5,125 L7.5,115 M17.5,125 L27.5,115" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowArrow)"/>
+    </svg>
 
-      <div class="ghost-glow"></div>
-    </div>
+    <svg class="ghost-hand-image" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="superNeonGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="0.9"/>
+          <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#0B5CFF" flood-opacity="0.7"/>
+        </filter>
+      </defs>
+      
+      <g transform="translate(10, 5) rotate(-35 50 50)">
+        <path d="M48,45 V18 c0-3.3-2.7-6-6-6 s-6,2.7-6,6 v25.5 c-1.5-1.4-3.5-3.5-5.5-5 c-2.4-1.8-5.8-1.5-7.9,0.7 c-2.1,2.2-2,5.7,0.3,7.8 l14.8,14 c3.9,3.7,6,8.8,6,14 h22 c0-5.3,1.6-10.4,4.5-14.7 c2.4-3.5,3.9-7.7,3.9-12.3 V43 c0-3.3-2.7-6-6-6 c-1,0-1.9,0.3-2.7,0.7 c-0.6-2.5-2.8-4.4-5.5-4.4 c-1.2,0-2.3,0.4-3.3,1 c-0.8-2.3-3-4-5.5-4 C49.8,30.3,48.5,30.8,48,31.7 Z" 
+              stroke="#ffffff" 
+              stroke-width="3.5" 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              filter="url(#superNeonGlow)"/>
+      </g>
+    </svg>
+
+    <div class="ghost-glow"></div>
   </div>
+</div>
 
 
   <div id="branchEnterOverlay" class="branch-enter-overlay" aria-hidden="true">
