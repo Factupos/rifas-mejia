@@ -1226,13 +1226,65 @@ body.search-has-text #raffles{ display:none !important; }
 @keyframes branchProgress{from{width:0}to{width:100%}}
 @keyframes branchEnterIn{from{opacity:0; transform:translateY(15px) scale(.96)}to{opacity:1; transform:translateY(0) scale(1)}}
 
-.branch-back-btn{
-  position:fixed; top:calc(env(safe-area-inset-top,0px) + 12px); right:12px; z-index:102;
-  width:44px; height:44px; border-radius:22px; border:1px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.12); color:#fff; display:none; align-items:center; justify-content:center;
-  backdrop-filter:blur(16px) saturate(130%); -webkit-backdrop-filter:blur(16px) saturate(130%);
-  box-shadow:0 10px 25px rgba(0,0,0,.3); cursor:pointer; font-size:20px; font-weight:900;
-  transition:transform .2s ease, background .2s ease, border-color .2s ease;
+./* =========================================================
+   BOTÓN VOLVER AL PANEL (Ultra Premium & Identificable)
+   ========================================================= */
+.branch-back-btn {
+  position: fixed; 
+  top: calc(env(safe-area-inset-top, 0px) + 12px); 
+  right: 12px; 
+  z-index: 102;
+  height: 44px; 
+  padding: 0 16px 0 12px; /* Espacio asimétrico para el icono */
+  border-radius: 22px; 
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  color: #ffffff; 
+  display: none; 
+  align-items: center; 
+  justify-content: center;
+  gap: 8px; /* Separación perfecta entre icono y texto */
+  
+  /* Efecto Cristal Avanzado */
+  backdrop-filter: blur(24px) saturate(150%); 
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.45), 
+    inset 0 2px 10px rgba(255, 255, 255, 0.25);
+  
+  cursor: pointer; 
+  transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), background .2s ease, border-color .2s ease;
+}
+
+.branch-back-btn.show { 
+  display: flex; 
+  animation: slideInPremiumBack 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Tipografía e Icono */
+.branch-back-btn .back-icon { 
+  font-size: 20px; 
+  line-height: 1; 
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+.branch-back-btn .back-text { 
+  font-size: 13px; 
+  font-weight: 900; 
+  letter-spacing: 0.8px; 
+  text-transform: uppercase; 
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.branch-back-btn:active {
+  transform: scale(0.92); 
+  background: rgba(255, 255, 255, 0.25); 
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes slideInPremiumBack {
+  from { opacity: 0; transform: translateY(-15px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .branch-back-btn.show{display:flex}
 .branch-back-btn:active{transform:scale(.90); background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.4)}
@@ -1693,7 +1745,10 @@ body.search-has-text #raffles{ display:none !important; }
   </div>
 </div>
 
-  <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">⌂</button>
+ <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">
+  <span class="back-icon">⌂</span>
+  <span class="back-text">Panel</span>
+</button>
 
   <header>
     <div class="brand-group">
@@ -1755,7 +1810,7 @@ const GID_CONFIG  = '1977832725';    // Config_Publica
 const GID_NOTIFICATIONS = '662101636'; // Notificaciones (logo)
 const PROXY = 'https://csv-proxy.jeisendigital.workers.dev/?u=';
 const SUCURSALES_SHEET_NAME = 'Sucursales';
-const SUCURSALES_RANGE = 'A:D';
+const SUCURSALES_RANGE = 'A:E';
 
 /* =========================================================
    ✅ LECTURAS ESPECIALES
@@ -2086,8 +2141,16 @@ async function fetchBranches(){
       const row = rows[i] || [];
       const name = String(row[0] || '').trim();
       const detail = String(row[1] || '').trim();
-      const image = String(row[3] || '').trim();
       const rawSheetId = String(row[2] || '').trim();
+      const image = String(row[3] || '').trim();
+      
+      // ✅ CONDICIÓN PREMIUM: Validar si la columna E es True
+      const isActiveRaw = row[4];
+      const isActive = normalizeBoolCell(isActiveRaw);
+      
+      // Si no es explícitamente TRUE (o 'Si', '1'), la ignoramos por completo
+      if(isActive !== true) continue;
+
       if(!name && !detail && !image && !rawSheetId) continue;
       const branchIndex = out.length;
       const sheetId = branchIndex === 0 ? BASE_KEY : sanitizeSheetId(rawSheetId);
