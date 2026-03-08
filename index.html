@@ -1231,63 +1231,59 @@ body.search-has-text #raffles{ display:none !important; }
    ========================================================= */
 .branch-back-btn {
   position: fixed; 
-  top: calc(env(safe-area-inset-top, 0px) + 12px); 
-  right: 12px; 
+  top: calc(env(safe-area-inset-top, 0px) + 16px); 
+  right: 16px; 
   z-index: 102;
-  height: 44px; 
-  padding: 0 16px 0 12px; /* Espacio asimétrico para el icono */
-  border-radius: 22px; 
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  width: 46px; 
+  height: 46px; 
+  border-radius: 50%; /* Círculo perfecto */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
   color: #ffffff; 
   display: none; 
   align-items: center; 
   justify-content: center;
-  gap: 8px; /* Separación perfecta entre icono y texto */
+  padding: 0;
   
-  /* Efecto Cristal Avanzado */
-  backdrop-filter: blur(24px) saturate(150%); 
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  /* Cristal esmerilado fresco y limpio */
+  backdrop-filter: blur(20px) saturate(140%); 
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.45), 
-    inset 0 2px 10px rgba(255, 255, 255, 0.25);
+    0 8px 24px rgba(0, 0, 0, 0.25), 
+    inset 0 1px 4px rgba(255, 255, 255, 0.2); /* Brillo interior muy sutil */
   
   cursor: pointer; 
-  transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), background .2s ease, border-color .2s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
 }
 
 .branch-back-btn.show { 
   display: flex; 
-  animation: slideInPremiumBack 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popInPremium 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Tipografía e Icono */
-.branch-back-btn .back-icon { 
-  font-size: 20px; 
-  line-height: 1; 
+/* Sombra suave exclusiva para el vector */
+.branch-back-btn svg {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-.branch-back-btn .back-text { 
-  font-size: 13px; 
-  font-weight: 900; 
-  letter-spacing: 0.8px; 
-  text-transform: uppercase; 
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
 }
 
+/* Interacción de toque */
 .branch-back-btn:active {
-  transform: scale(0.92); 
+  transform: scale(0.88); 
   background: rgba(255, 255, 255, 0.25); 
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 2px 6px rgba(255, 255, 255, 0.15);
 }
 
-@keyframes slideInPremiumBack {
-  from { opacity: 0; transform: translateY(-15px) scale(0.9); }
+.branch-back-btn:active svg {
+  transform: scale(0.95);
+}
+
+@keyframes popInPremium {
+  from { opacity: 0; transform: translateY(-10px) scale(0.9); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.branch-back-btn.show{display:flex}
-.branch-back-btn:active{transform:scale(.90); background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.4)}
+
 
 @media (max-width:380px){
   .branch-brand .mini-logo{ width: 60px; height: 60px; }
@@ -1745,9 +1741,11 @@ body.search-has-text #raffles{ display:none !important; }
   </div>
 </div>
 
- <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">
-  <span class="back-icon">⌂</span>
-  <span class="back-text">Panel</span>
+<button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+  </svg>
 </button>
 
   <header>
