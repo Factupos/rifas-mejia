@@ -1232,55 +1232,63 @@ body.search-has-text #raffles{ display:none !important; }
 .branch-back-btn {
   position: fixed; 
   top: calc(env(safe-area-inset-top, 0px) + 16px); 
-  right: 16px; 
+  right: 16px; /* Se mantiene arriba a la derecha */
   z-index: 102;
-  width: 46px; 
-  height: 46px; 
-  border-radius: 50%; /* Círculo perfecto */
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%; /* Círculo perfecto tipo burbuja */
+  
+  /* Súper transparente */
+  background: rgba(255, 255, 255, 0.05); 
+  
+  /* Borde ultra fino que simula la tensión de la burbuja */
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff; 
   display: none; 
   align-items: center; 
   justify-content: center;
   padding: 0;
   
-  /* Cristal esmerilado fresco y limpio */
-  backdrop-filter: blur(20px) saturate(140%); 
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  /* Cristal esmerilado suave */
+  backdrop-filter: blur(12px) saturate(120%); 
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  
+  /* Sombras y reflejos 3D para el efecto líquido/burbuja */
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.25), 
-    inset 0 1px 4px rgba(255, 255, 255, 0.2); /* Brillo interior muy sutil */
+    inset 0 4px 6px rgba(255, 255, 255, 0.15), /* Reflejo interno de luz (arriba) */
+    inset 0 -4px 6px rgba(0, 0, 0, 0.1), /* Sombra interna (abajo) */
+    0 8px 20px rgba(0, 0, 0, 0.25); /* Sombra proyectada suave */
   
   cursor: pointer; 
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .branch-back-btn.show { 
   display: flex; 
-  animation: popInPremium 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: bubbleFloatIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Sombra suave exclusiva para el vector */
+/* El icono sutilmente iluminado */
 .branch-back-btn svg {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   transition: transform 0.2s ease;
 }
 
-/* Interacción de toque */
+/* Efecto al tocar: la burbuja se contrae y brilla más */
 .branch-back-btn:active {
-  transform: scale(0.88); 
-  background: rgba(255, 255, 255, 0.25); 
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 2px 6px rgba(255, 255, 255, 0.15);
+  transform: scale(0.85); 
+  background: rgba(255, 255, 255, 0.15); 
+  box-shadow: 
+    inset 0 2px 8px rgba(255, 255, 255, 0.2), 
+    0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .branch-back-btn:active svg {
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
-@keyframes popInPremium {
-  from { opacity: 0; transform: translateY(-10px) scale(0.9); }
+@keyframes bubbleFloatIn {
+  from { opacity: 0; transform: translateY(-15px) scale(0.8); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -1742,7 +1750,7 @@ body.search-has-text #raffles{ display:none !important; }
 </div>
 
 <button id="branchBackBtn" class="branch-back-btn" type="button" aria-label="Volver al panel principal" title="Volver al panel principal">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
     <polyline points="9 22 9 12 15 12 15 22"></polyline>
   </svg>
