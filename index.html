@@ -1585,6 +1585,18 @@ function buildPanelUrl(sheetId, opts={}){
   if(opts && opts.bid) url.searchParams.set('bid', String(opts.bid));
   return url.toString();
 }
+function isReloadNavigation(){
+  try{
+    const nav = performance.getEntriesByType && performance.getEntriesByType('navigation');
+    if(nav && nav[0] && nav[0].type) return nav[0].type === 'reload';
+  }catch(_){}
+  try{
+    return !!(performance && performance.navigation && performance.navigation.type === 1);
+  }catch(_){ return false; }
+}
+function hasBranchQueryContext(){
+  return !!sanitizeSheetId(SELECTED_BRANCH_KEY) || BRANCH_OPEN_MODE || !!BRANCH_OPEN_BID;
+}
 function goToBranchPanel(){
   const url = buildPanelUrl('');
   location.href = url;
@@ -1743,21 +1755,33 @@ async function maybeStartBranchSelector(){
   const branches = await fetchBranches();
   BRANCHES = branches;
 
-  const hasBaseBranch = branches.some(b => b && b.isBase);
-  const hasSelectedSheet = !!sanitizeSheetId(SELECTED_BRANCH_KEY);
-  const openingBaseBranch = BRANCH_OPEN_MODE && BRANCH_OPEN_BID === 'base' && !hasSelectedSheet && hasBaseBranch;
-  const openingExternalBranch = BRANCH_OPEN_MODE && hasSelectedSheet;
-  const shouldSkipSelector = openingBaseBranch || openingExternalBranch;
-
-  if(shouldSkipSelector){
-    setBranchBackVisibility();
-    return false;
-  }
   if(branches.length > 0){
+    if(isReloadNavigation()){
+      if(hasBranchQueryContext()){
+        location.replace(buildPanelUrl(''));
+        return true;
+      }
+      renderBranchSelector(branches);
+      bootHide();
+      return true;
+    }
+
+    const hasBaseBranch = branches.some(b => b && b.isBase);
+    const hasSelectedSheet = !!sanitizeSheetId(SELECTED_BRANCH_KEY);
+    const openingBaseBranch = BRANCH_OPEN_MODE && BRANCH_OPEN_BID === 'base' && !hasSelectedSheet && hasBaseBranch;
+    const openingExternalBranch = BRANCH_OPEN_MODE && hasSelectedSheet;
+    const shouldSkipSelector = openingBaseBranch || openingExternalBranch;
+
+    if(shouldSkipSelector){
+      setBranchBackVisibility();
+      return false;
+    }
+
     renderBranchSelector(branches);
     bootHide();
     return true;
   }
+
   return false;
 }
 /* =========================
