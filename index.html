@@ -1626,7 +1626,7 @@ async function fetchBranches(){
 function setBranchBackVisibility(){
   const btn = document.getElementById('branchBackBtn');
   if(!btn) return;
-  const hasBranchOpenContext = (!!sanitizeSheetId(SELECTED_BRANCH_KEY)) || (BRANCH_OPEN_MODE && BRANCH_OPEN_BID === 'base');
+  const hasBranchOpenContext = BRANCH_OPEN_MODE && (BRANCH_OPEN_BID === 'base' || !!sanitizeSheetId(SELECTED_BRANCH_KEY));
   if(BRANCHES.length > 0 && hasBranchOpenContext) btn.classList.add('show');
   else btn.classList.remove('show');
 }
@@ -1669,7 +1669,11 @@ function openBranch(branch){
   const active = document.querySelector(`.branch-card[data-branch-index="${Number(branch.index ?? 0)}"]`);
   if(active) active.classList.add('is-entering');
 
-  location.href = buildPanelUrl(safeSheetId, { branchopen:true, bid: branchBid });
+  const targetUrl = branch.isBase
+    ? buildPanelUrl('', { branchopen:true, bid: 'base' })
+    : buildPanelUrl(safeSheetId, { branchopen:true, bid: branchBid });
+
+  location.href = targetUrl;
 }
 function renderBranchSelector(branches){
   BRANCHES = Array.isArray(branches) ? branches.slice() : [];
