@@ -1622,6 +1622,15 @@ function setBranchBackVisibility(){
   if(BRANCHES.length > 0 && !!SELECTED_BRANCH_KEY) btn.classList.add('show');
   else btn.classList.remove('show');
 }
+function wireBranchBackButton(){
+  const btn = document.getElementById('branchBackBtn');
+  if(!btn || btn.dataset.wired === '1') return;
+  btn.dataset.wired = '1';
+  btn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    goToBranchPanel();
+  }, { passive:false });
+}
 function showBranchEnterOverlay(branch){
   const ov = document.getElementById('branchEnterOverlay');
   if(!ov) return;
@@ -2502,6 +2511,15 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   // Título boot con el nombre (si ya está disponible)
   const bt = document.getElementById('bootTitle');
   if(bt) bt.textContent = (window.__CONFIG_NAME ? window.__CONFIG_NAME : 'Rifas');
+
+  // Panel de sucursales: en apertura inicial o al refrescar SIN ssid,
+  // se debe decidir primero si se muestra selector o si entra normal.
+  wireBranchBackButton();
+  bootSet(24, 'Buscando sucursales…', 'Verificando si se debe mostrar el panel principal');
+  const branchSelectorShown = await maybeStartBranchSelector();
+  if(branchSelectorShown){
+    return;
+  }
 
   // ✅ Chequeo bloqueo lo primero (ya con datos básicos)
   bootSet(28, 'Verificando habilitación…', 'Leyendo Configuracion!X2');
